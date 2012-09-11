@@ -12,6 +12,9 @@ namespace IronIO
     {
         public IronClient(string name, string version, string product, string host = null, int port = 0, string projectId = null, string token = null, string protocol = null, int apiVersion = 0, string configFile = null)
         {
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentException("Name cannot be null or empty");
+
             AutoMapper.Mapper.CreateMap<Configuration, Configuration>().ForMember(c => c.Port, opt => opt.Condition(s => s.Port > 0))
                                                          .ForMember(c => c.ApiVersion, opt => opt.Condition(s => s.ApiVersion > 0))
                                                          .ForMember(c => c.Host, opt => opt.Condition(s => !String.IsNullOrEmpty(s.Host)))
@@ -61,7 +64,7 @@ namespace IronIO
         {
             this.Headers = new NameValueCollection();
             this.Headers["Accept"] = "application/json";
-            this.Headers["User-Agent"] = String.Format("{0} (version: {2})",this.Config.Name,this.Config.ClientVersion);
+            this.Headers["User-Agent"] = String.Format("{0} (version: {1})",this.Config.Name,this.Config.ClientVersion);
             this.Headers["Authorization"] = String.Format("OAuth {0}", this.Config.Token);
         }
         public string Request(string url, string method, string body = "", NameValueCollection headers = null, bool retry = true)
