@@ -64,8 +64,6 @@ namespace IronIO
         private void BuildHeaders()
         {
             this.Headers = new NameValueCollection();
-            this.Headers["Accept"] = "application/json";
-            this.Headers["User-Agent"] = String.Format("{0} (version: {1})",this.Config.Name,this.Config.ClientVersion);
             this.Headers["Authorization"] = String.Format("OAuth {0}", this.Config.Token);
         }
         private bool ExponentialBackoff(Random rng, int tries)
@@ -75,7 +73,7 @@ namespace IronIO
             System.Threading.Thread.Sleep(timespan);
             return true;
         }
-        public string Request(string url, string method, string body = "", NameValueCollection headers = null, bool retry = true)
+        public string Request(string url, string method, string body = null, NameValueCollection headers = null, bool retry = true)
         {
             if (headers != null)
                 foreach (var key in this.Headers.Keys.OfType<string>().Except( headers.Keys.OfType<string>()))
@@ -84,9 +82,11 @@ namespace IronIO
                 headers = this.Headers;
 
 
-            url = this.baseUrl + url;
-            WebRequest request = HttpWebRequest.Create(url);
+            url = this.BaseUrl + url;
+            HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(url);
             request.ContentType = "application/json";
+            request.Accept = "application/json";
+            request.UserAgent = String.Format("{0} (version: {1})", this.Config.Name, this.Config.ClientVersion);
             request.Headers.Add(headers);
             request.Method = method;
 
@@ -145,11 +145,11 @@ namespace IronIO
 
         public string Post(string url, string body = "", NameValueCollection headers = null, bool retry = true)
         {
-            return Request( url, "POST", body:body,headers:Headers,retry:retry);
+            return Request( url, "POST", body:body,headers:headers,retry:retry);
         }
         public string Put(string url, string body = "", NameValueCollection headers = null, bool retry = true)
         {
-            return Request(url, "Put", body: body, headers: Headers, retry: retry);
+            return Request(url, "PUT", body: body, headers: headers, retry: retry);
         }
 
     }
