@@ -6,7 +6,7 @@ using System.IO;
 using Newtonsoft.Json;
 namespace IronIO.Config
 {
-    public class JsonConfigFactory : ConfigurationFactory
+    internal class JsonConfigFactory : ConfigurationFactory
     {
         private ConfigurationFactory configurationFactory;
         private string filePath;

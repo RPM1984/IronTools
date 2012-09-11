@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IronIO.Config
 {
-    class DefaultConfigurationFactory : ConfigurationFactory
+    internal class DefaultConfigurationFactory : ConfigurationFactory
     {
         public override Configuration GetConfiguartion()
         {

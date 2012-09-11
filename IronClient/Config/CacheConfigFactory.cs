@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IronIO.Config
 {
-    class CacheConfigFactory : ConfigurationFactory
+    internal class CacheConfigFactory : ConfigurationFactory
     {
         private ConfigurationFactory configurationFactory;
         public CacheConfigFactory()

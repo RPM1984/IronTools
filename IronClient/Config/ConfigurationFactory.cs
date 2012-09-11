@@ -5,8 +5,8 @@ using System.Text;
 
 namespace IronIO.Config
 {
-    abstract class ConfigurationFactory
+    internal abstract class ConfigurationFactory
     {
-        public virtual Configuration GetConfiguartion();
+        public abstract Configuration GetConfiguartion();
     }
 }

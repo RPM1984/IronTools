@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IronIO.Config
 {
-    class MQConfigFactory : ConfigurationFactory
+    internal class MQConfigFactory : ConfigurationFactory
     {
         private ConfigurationFactory configurationFactory;
         public MQConfigFactory() : this ( new DefaultConfigurationFactory())
