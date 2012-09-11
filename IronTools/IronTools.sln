@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronClient", "..\IronClient\IronClient.csproj", "{7A6847CC-E96B-4C21-8421-CEC2906F4957}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronClient", "IronClient\IronClient.csproj", "{7A6847CC-E96B-4C21-8421-CEC2906F4957}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronMQ", "IronMQ\IronMQ.csproj", "{F6ED5EAE-D9EC-4A59-886F-5FBE4E7F4B4B}"
 EndProject

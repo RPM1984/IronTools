@@ -50,7 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\IronClient\IronClient.csproj">
+    <ProjectReference Include="..\IronClient\IronClient.csproj">
       <Project>{7A6847CC-E96B-4C21-8421-CEC2906F4957}</Project>
       <Name>IronClient</Name>
     </ProjectReference>
