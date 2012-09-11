@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +56,7 @@
     <Compile Include="Config\EnvConfigFactory.cs" />
     <Compile Include="Config\JsonConfigFactory.cs" />
     <Compile Include="Config\WorkerConfigFactory.cs" />
+    <Compile Include="Error.cs" />
     <Compile Include="IronClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
