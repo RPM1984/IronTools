@@ -49,7 +49,8 @@ namespace IronIO
         }
 
         public Configuration Config { get; set; }
-
+        private Random _rng;
+        private Random Rng { get { return _rng ?? (_rng = new Random()); } }
         private NameValueCollection Headers { get; set; }
         private string baseUrl;
         private string BaseUrl
@@ -66,6 +67,13 @@ namespace IronIO
             this.Headers["Accept"] = "application/json";
             this.Headers["User-Agent"] = String.Format("{0} (version: {1})",this.Config.Name,this.Config.ClientVersion);
             this.Headers["Authorization"] = String.Format("OAuth {0}", this.Config.Token);
+        }
+        private bool ExponentialBackoff(Random rng, int tries)
+        {
+            // source: http://aws.amazon.com/articles/1394
+            var timespan = rng.Next(Convert.ToInt32(Math.Pow(4, tries) * 100));
+            System.Threading.Thread.Sleep(timespan);
+            return true;
         }
         public string Request(string url, string method, string body = "", NameValueCollection headers = null, bool retry = true)
         {
@@ -92,17 +100,25 @@ namespace IronIO
                 }
             }
             HttpWebResponse response;
-            try
+            int tries = 0, maxTries = 5;
+            do
             {
-                response = (HttpWebResponse)request.GetResponse();
-            }
-            catch (WebException we)
-            {
-                if (we.Response != null)
-                    response = (HttpWebResponse)we.Response;
-                else
-                    throw we;
-            }
+                try
+                {
+                    response = (HttpWebResponse)request.GetResponse();
+                }
+                catch (WebException we)
+                {
+                    if (we.Response != null)
+                        response = (HttpWebResponse)we.Response;
+                    else
+                        throw we;
+                }
+            } while (response.StatusCode == HttpStatusCode.ServiceUnavailable
+                && retry
+                && tries++ < maxTries
+                && ExponentialBackoff(Rng, tries));
+
             string json = string.Empty;
             using (System.IO.StreamReader reader = new System.IO.StreamReader(response.GetResponseStream()))
             {
