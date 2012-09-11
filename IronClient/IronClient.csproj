@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\IronTools\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\IronTools\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,8 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\ArgsConfigFactory.cs" />
+    <Compile Include="Config\CacheConfigFactory.cs" />
+    <Compile Include="Config\Configuration.cs" />
+    <Compile Include="Config\ConfigurationFactory.cs" />
+    <Compile Include="Config\DefaultConfigurationFactory.cs" />
+    <Compile Include="Config\MQConfigFactory.cs" />
+    <Compile Include="Config\EnvConfigFactory.cs" />
+    <Compile Include="Config\JsonConfigFactory.cs" />
+    <Compile Include="Config\WorkerConfigFactory.cs" />
     <Compile Include="IronClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
