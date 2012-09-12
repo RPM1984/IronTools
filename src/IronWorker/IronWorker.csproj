@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\QueueResponse.cs" />
+    <Compile Include="Data\Task.cs" />
+    <Compile Include="Data\TaskInfo.cs" />
     <Compile Include="IronWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

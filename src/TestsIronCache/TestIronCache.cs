@@ -13,11 +13,11 @@ namespace IronCacheTests
     ///to contain all IronCacheTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class IronCacheTest
+    public class TestIronCache
     {
         string _projectId, _token;
 
-        public IronCacheTest()
+        public TestIronCache()
         {
             _projectId = ConfigurationManager.AppSettings["IRONIO_PROJECT_ID"];
             _token = ConfigurationManager.AppSettings["IRONIO_TOKEN"];
