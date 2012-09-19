@@ -98,8 +98,11 @@ namespace IronIO
             var url = String.Format("{0}?{1}", _taskCore, queryParameters.ToString());
 
             var json = _client.Get(url);
-            IList<TaskInfo> s = JsonConvert.DeserializeObject<TaskInfo[]>(json);
-            return s;
+            var d = JsonConvert.DeserializeObject<Dictionary<string,TaskInfo[]>>(json);
+            TaskInfo[] tasks;
+            if(d.TryGetValue("tasks", out tasks))
+                return tasks;
+            return new TaskInfo[0];
         }
 
     }
