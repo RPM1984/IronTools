@@ -17,6 +17,7 @@ namespace IronIO
             _client = new IronClient("IronWorker .NET", "0.1", "iron_worker", projectId: projectId, token: token);
         }
 
+        #region Tasks
         public IList<TaskInfo> Queue(IEnumerable<Task> tasks)
         {
 
@@ -49,7 +50,7 @@ namespace IronIO
             var url = string.Format("{0}/{1}", _taskCore, id);
 
             var response = _client.Get(url);
-            
+
             var taskInfo = JsonConvert.DeserializeObject<TaskInfo>(response);
 
             return taskInfo;
@@ -98,12 +99,54 @@ namespace IronIO
             var url = String.Format("{0}?{1}", _taskCore, queryParameters.ToString());
 
             var json = _client.Get(url);
-            var d = JsonConvert.DeserializeObject<Dictionary<string,TaskInfo[]>>(json);
+            var d = JsonConvert.DeserializeObject<Dictionary<string, TaskInfo[]>>(json);
             TaskInfo[] tasks;
-            if(d.TryGetValue("tasks", out tasks))
+            if (d.TryGetValue("tasks", out tasks))
                 return tasks;
             return new TaskInfo[0];
         }
+        
+        #endregion
+
+        #region Code Packages
+        private static string _codeCore = "codes";
+        public IList<CodeInfo> Codes(int page = 0, int per_page = 30) {
+            var url = string.Format("{0}?page={1}&per_page={2}", _codeCore, page, per_page);
+            var json = _client.Get(url);
+            var d = JsonConvert.DeserializeObject<Dictionary<string, CodeInfo[]>>(json);
+            CodeInfo[] codes;
+            if (d.TryGetValue("codes", out codes))
+                return codes;
+            return new CodeInfo[0];
+        }
+
+
+        public CodeInfo Code(string id) {
+            var url = string.Format("{0}/{1}", _codeCore, id);
+            var json = _client.Get(url);
+            var codeInfo = JsonConvert.DeserializeObject<CodeInfo>(json);
+            return codeInfo;
+        }
+
+        public void DeleteCode(string id) {
+            var url = string.Format("{0}/{1}", _codeCore, id);
+            var json = _client.Delete(url);
+            var msg = JsonConvert.DeserializeObject(json);
+            
+        }
+
+        public IList<CodeInfo> CodeRevisions(string id, int page = 0, int per_page = 30) {
+            var url = string.Format("{0}/{1}/revisions?page={2}&per_page={3}", _codeCore, id,page,per_page);
+            var json = _client.Get(url);
+            var d = JsonConvert.DeserializeObject < Dictionary<string, CodeInfo[]>>(json);
+            CodeInfo[] revisions;
+            if (d.TryGetValue("revisions", out revisions))
+                return revisions;
+            return new CodeInfo[0];
+
+        }
+
+        #endregion
 
     }
 }
