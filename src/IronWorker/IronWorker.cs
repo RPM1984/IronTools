@@ -18,9 +18,9 @@ namespace IronIO
         }
 
         #region Tasks
+
         public IList<TaskInfo> Queue(IEnumerable<Task> tasks)
         {
-
             var body = JsonConvert.SerializeObject(new
             {
                 tasks = tasks.ToArray()
@@ -30,17 +30,18 @@ namespace IronIO
             var queueResponse = JsonConvert.DeserializeObject<QueueResponse>(response);
             return queueResponse.tasks;
         }
+
         public IList<TaskInfo> Queue(string code_name, string payload, int priority = 0, int timeout = 3600, int delay = 0)
         {
-            var tasks = new Task[] 
-                { 
-                    new Task(){ 
-                                code_name = code_name, 
-                                payload = payload, 
-                                priority = priority, 
-                                timeout = timeout, 
-                                delay = delay 
-                            } 
+            var tasks = new Task[]
+                {
+                    new Task(){
+                                code_name = code_name,
+                                payload = payload,
+                                priority = priority,
+                                timeout = timeout,
+                                delay = delay
+                            }
                 };
             return Queue(tasks);
         }
@@ -71,6 +72,7 @@ namespace IronIO
 
             return status.ContainsKey("msg") && status["msg"] == "Cancelled";
         }
+
         public IList<TaskInfo> Tasks(int page = 0, int per_page = 30, StatusEnum statusFilter = StatusEnum.All, DateTime? from_time = null, DateTime? to_time = null)
         {
             StringBuilder queryParameters = new StringBuilder();
@@ -105,12 +107,15 @@ namespace IronIO
                 return tasks;
             return new TaskInfo[0];
         }
-        
-        #endregion
+
+        #endregion Tasks
 
         #region Code Packages
+
         private static string _codeCore = "codes";
-        public IList<CodeInfo> Codes(int page = 0, int per_page = 30) {
+
+        public IList<CodeInfo> Codes(int page = 0, int per_page = 30)
+        {
             var url = string.Format("{0}?page={1}&per_page={2}", _codeCore, page, per_page);
             var json = _client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, CodeInfo[]>>(json);
@@ -120,33 +125,71 @@ namespace IronIO
             return new CodeInfo[0];
         }
 
-
-        public CodeInfo Code(string id) {
+        public CodeInfo Code(string id)
+        {
             var url = string.Format("{0}/{1}", _codeCore, id);
             var json = _client.Get(url);
             var codeInfo = JsonConvert.DeserializeObject<CodeInfo>(json);
             return codeInfo;
         }
 
-        public void DeleteCode(string id) {
+        public void DeleteCode(string id)
+        {
             var url = string.Format("{0}/{1}", _codeCore, id);
             var json = _client.Delete(url);
             var msg = JsonConvert.DeserializeObject(json);
-            
         }
 
-        public IList<CodeInfo> CodeRevisions(string id, int page = 0, int per_page = 30) {
-            var url = string.Format("{0}/{1}/revisions?page={2}&per_page={3}", _codeCore, id,page,per_page);
+        public IList<CodeInfo> CodeRevisions(string id, int page = 0, int per_page = 30)
+        {
+            var url = string.Format("{0}/{1}/revisions?page={2}&per_page={3}", _codeCore, id, page, per_page);
             var json = _client.Get(url);
-            var d = JsonConvert.DeserializeObject < Dictionary<string, CodeInfo[]>>(json);
+            var d = JsonConvert.DeserializeObject<Dictionary<string, CodeInfo[]>>(json);
             CodeInfo[] revisions;
             if (d.TryGetValue("revisions", out revisions))
                 return revisions;
             return new CodeInfo[0];
-
         }
 
-        #endregion
+        #endregion Code Packages
 
+        #region Schedule Tasks
+
+        private string _scheduleCore = "schedules";
+
+        public IList<ScheduleInfo> Schedules(int page = 0, int per_page = 30)
+        {
+            var url = String.Format("{0}?page={1}&per_page={2}", _scheduleCore, page, per_page);
+            var json = _client.Get(url);
+            var d = JsonConvert.DeserializeObject<Dictionary<string, ScheduleInfo[]>>(json);
+            ScheduleInfo[] schedules;
+            if (d.TryGetValue("schedules", out schedules))
+                return schedules;
+            return new ScheduleInfo[0];
+        }
+
+        public ScheduleInfo Schedule(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CancelSchedule(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<ScheduleInfo> ScheduleWorker(params ScheduleTask[] schedules)
+        {
+            var url = _scheduleCore;
+            Dictionary<string, IList<ScheduleTask>> d = new Dictionary<string, IList<ScheduleTask>>();
+            d["schedules"] = schedules;
+            var json = JsonConvert.SerializeObject(d);
+            var responseJson = _client.Post(url, body: json);
+            var response = JsonConvert.DeserializeObject(responseJson) as Dictionary<string, object>;
+            var s = response["schedules"] as ScheduleInfo[];
+            return s;
+        }
+
+        #endregion Schedule Tasks
     }
 }
