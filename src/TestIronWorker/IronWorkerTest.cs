@@ -101,7 +101,10 @@ namespace TestIronWorker
         public void TaskTest()
         {
             IronWorker target = new IronWorker();
-            string id = string.Empty; // TODO: Initialize to an appropriate value
+            var tasks = target.Tasks(per_page:1);
+            Assert.AreEqual(1, tasks.Count);
+
+            string id = tasks[0].id;
             TaskInfo actual;
             actual = target.Task(id);
             Assert.IsNotNull(actual);

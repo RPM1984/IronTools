@@ -80,7 +80,7 @@ namespace IronIO
             if (page != 0)
                 queryParameters.AppendFormat("page={0}&", page);
             if (per_page != 30)
-                queryParameters.AppendFormat("per_page-{0}&", per_page);
+                queryParameters.AppendFormat("per_page={0}&", per_page);
             if (!statusFilter.HasFlag(StatusEnum.All))
             {
                 var statusQueryParams = Enum.GetNames(typeof(StatusEnum))
@@ -157,18 +157,18 @@ namespace IronIO
 
         private string _scheduleCore = "schedules";
 
-        public IList<ScheduleInfo> Schedules(int page = 0, int per_page = 30)
+        public IList<ScheduleTask> Schedules(int page = 0, int per_page = 30)
         {
             var url = String.Format("{0}?page={1}&per_page={2}", _scheduleCore, page, per_page);
             var json = _client.Get(url);
-            var d = JsonConvert.DeserializeObject<Dictionary<string, ScheduleInfo[]>>(json);
-            ScheduleInfo[] schedules;
+            var d = JsonConvert.DeserializeObject<Dictionary<string, ScheduleTask[]>>(json);
+            ScheduleTask[] schedules;
             if (d.TryGetValue("schedules", out schedules))
                 return schedules;
-            return new ScheduleInfo[0];
+            return new ScheduleTask[0];
         }
 
-        public ScheduleInfo Schedule(string id)
+        public ScheduleTask Schedule(string id)
         {
             throw new NotImplementedException();
         }
@@ -178,7 +178,7 @@ namespace IronIO
             throw new NotImplementedException();
         }
 
-        public IList<ScheduleInfo> ScheduleWorker(params ScheduleTask[] schedules)
+        public IList<ScheduleTask> ScheduleWorker(params ScheduleTask[] schedules)
         {
             var url = _scheduleCore;
             Dictionary<string, IList<ScheduleTask>> d = new Dictionary<string, IList<ScheduleTask>>();
@@ -186,7 +186,7 @@ namespace IronIO
             var json = JsonConvert.SerializeObject(d);
             var responseJson = _client.Post(url, body: json);
             var response = JsonConvert.DeserializeObject(responseJson) as Dictionary<string, object>;
-            var s = response["schedules"] as ScheduleInfo[];
+            var s = response["schedules"] as ScheduleTask[];
             return s;
         }
 

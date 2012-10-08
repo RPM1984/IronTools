@@ -30,7 +30,12 @@ namespace IronIO
             if (product == "iron_cache")
                 configFactory = new CacheConfigFactory(configFactory);
 
-            configFactory = new JsonConfigFactory(configFactory, "~/.iron.json");
+            string homePath = (Environment.OSVersion.Platform == PlatformID.Unix ||
+                   Environment.OSVersion.Platform == PlatformID.MacOSX)
+    ? Environment.GetEnvironmentVariable("HOME")
+    : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+
+            configFactory = new JsonConfigFactory(configFactory, System.IO.Path.Combine(homePath, ".iron.json"));
             configFactory = new EnvConfigFactory(configFactory);
             configFactory = new JsonConfigFactory(configFactory, "iron.json");
             configFactory = new JsonConfigFactory(configFactory, configFile);
