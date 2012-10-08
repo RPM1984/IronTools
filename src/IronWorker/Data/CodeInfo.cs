@@ -5,20 +5,28 @@ namespace IronIO.Data
     [JsonObject]
     public class CodeInfo
     {
-        public string id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
-        public string project_id { get; set; }
+        [JsonProperty(PropertyName = "latest_change")]
+        public int LatestChange { get; set; }
 
-        public string name { get; set; }
+        [JsonProperty(PropertyName = "latest_checksum")]
+        public string LatestChecksum { get; set; }
 
-        public string runtime { get; set; }
+        [JsonProperty(PropertyName = "latest_history_id")]
+        public string LatestHistoryId { get; set; }
 
-        public string latest_checksum { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
-        public int rev { get; set; }
+        [JsonProperty(PropertyName = "project_id")]
+        public string ProjectId { get; set; }
 
-        public string latest_history_id { get; set; }
+        [JsonProperty(PropertyName = "rev")]
+        public int Revision { get; set; }
 
-        public int latest_change { get; set; }
+        [JsonProperty(PropertyName = "runtime")]
+        public string Runtime { get; set; }
     }
 }
