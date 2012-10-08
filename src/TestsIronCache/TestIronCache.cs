@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using IronIO;
 using IronIO.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,7 +13,7 @@ namespace IronCacheTests
     [TestClass()]
     public class TestIronCache
     {
-        string _projectId, _token;
+        private string _projectId, _token;
 
         public TestIronCache()
         {
@@ -154,6 +152,7 @@ namespace IronCacheTests
 
             string key = "cf435dc2-7f12-4f37-94c2-26077b3cd414"; // random unique identifier
             string cache = "test_cache";
+
             //target.Remove(cache, key);
             var expected = 1;
             target.Put(cache, key, 0, false, false, 0);

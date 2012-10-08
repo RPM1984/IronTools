@@ -1,12 +1,8 @@
 ﻿using IronIO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
 
 namespace TestIronClient
 {
-    
-    
     /// <summary>
     ///This is a test class for IronClientTest and is intended
     ///to contain all IronClientTest Unit Tests
@@ -14,8 +10,6 @@ namespace TestIronClient
     [TestClass()]
     public class IronClientTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -35,7 +29,8 @@ namespace TestIronClient
         }
 
         #region Additional test attributes
-        // 
+
+        //
         //You can use the following additional attributes as you write your tests:
         //
         //Use ClassInitialize to run code before running the first test in the class
@@ -62,8 +57,8 @@ namespace TestIronClient
         //{
         //}
         //
-        #endregion
 
+        #endregion Additional test attributes
 
         /// <summary>
         ///A test for IronClient Constructor
@@ -85,6 +80,5 @@ namespace TestIronClient
             IronClient target = new IronClient(name, version, product, host, port, projectId, token, protocol, apiVersion, configFile);
             Assert.IsNotNull(target);
         }
-        
     }
 }

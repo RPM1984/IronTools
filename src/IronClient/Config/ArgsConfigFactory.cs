@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace IronIO.Config
+﻿namespace IronIO.Config
 {
     internal class ArgsConfigFactory : ConfigurationFactory
     {
@@ -18,8 +13,10 @@ namespace IronIO.Config
         private int apiVersion;
         private int port;
 
-        public ArgsConfigFactory(string name, string version, string product, string host, int port, string projectId, string token, string protocol, int apiVersion): this(new DefaultConfigurationFactory(), name, version,product,host, port,projectId,token,protocol,apiVersion)
+        public ArgsConfigFactory(string name, string version, string product, string host, int port, string projectId, string token, string protocol, int apiVersion)
+            : this(new DefaultConfigurationFactory(), name, version, product, host, port, projectId, token, protocol, apiVersion)
         { }
+
         public ArgsConfigFactory(ConfigurationFactory configFactory, string name, string version, string product, string host, int port, string projectId, string token, string protocol, int apiVersion)
         {
             // TODO: Complete member initialization
@@ -34,9 +31,10 @@ namespace IronIO.Config
             this.apiVersion = apiVersion;
             this.port = port;
         }
+
         public override Configuration GetConfiguartion()
         {
-            Configuration baseConfig =  configFactory.GetConfiguartion();
+            Configuration baseConfig = configFactory.GetConfiguartion();
             Configuration argsConfig = new Configuration()
             {
                 ApiVersion = this.apiVersion,

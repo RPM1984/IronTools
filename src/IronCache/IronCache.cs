@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using IronIO.Data;
 using System.Web;
+using IronIO.Data;
+using Newtonsoft.Json;
 
 namespace IronIO
 {
@@ -12,10 +10,12 @@ namespace IronIO
     {
         private IronClient _client;
         private static string _core = "caches";
+
         public IronCache(string projectId = null, string token = null)
         {
             _client = new IronClient("IronCache .NET", "0.1", "iron_cache", projectId: projectId, token: token);
         }
+
         public IList<Cache> Caches()
         {
             var response = _client.Get(_core);

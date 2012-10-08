@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace IronIO.Config
+﻿namespace IronIO.Config
 {
     internal class CacheConfigFactory : ConfigurationFactory
     {
         private ConfigurationFactory configurationFactory;
+
         public CacheConfigFactory()
             : this(new DefaultConfigurationFactory())
         {
-
         }
+
         public CacheConfigFactory(ConfigurationFactory configuarationFactory)
         {
             this.configurationFactory = configuarationFactory;
         }
+
         public override Configuration GetConfiguartion()
         {
             Configuration config = configurationFactory.GetConfiguartion();

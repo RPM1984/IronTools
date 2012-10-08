@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using Newtonsoft.Json;
-using System.ComponentModel;
 
 namespace IronIO.Data
 {
@@ -13,7 +9,7 @@ namespace IronIO.Data
         /// <summary>
         /// The item’s data
         /// </summary>
-        [JsonProperty("value",Required=Required.Always)]
+        [JsonProperty("value", Required = Required.Always)]
         public T Body { get; set; }
 
         /// <summary>

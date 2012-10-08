@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -21,7 +18,7 @@ namespace IronIO.Data
         Timeout = 64,
         All = Queued | Running | Complete | Error | Cancelled | Killed | Timeout
     }
-    
+
     [JsonObject]
     public class TaskInfo
     {
@@ -50,6 +47,5 @@ namespace IronIO.Data
         public int timeout { get; set; }
 
         public int percent { get; set; }
-
     }
 }

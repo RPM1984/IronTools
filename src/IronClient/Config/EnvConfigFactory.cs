@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace IronIO.Config
 {
     internal class EnvConfigFactory : ConfigurationFactory
     {
-
         private ConfigurationFactory configurationFactory;
-        public EnvConfigFactory() : this ( new DefaultConfigurationFactory())
-        {
 
+        public EnvConfigFactory()
+            : this(new DefaultConfigurationFactory())
+        {
         }
+
         public EnvConfigFactory(ConfigurationFactory configuarationFactory)
         {
             this.configurationFactory = configuarationFactory;
         }
+
         public override Configuration GetConfiguartion()
         {
             var envConfig = ConfigFromEnv();
@@ -32,7 +31,7 @@ namespace IronIO.Config
 
             foreach (var propertyInfo in config.GetType().GetProperties(System.Reflection.BindingFlags.SetProperty))
             {
-                var key = String.Format("{0}_{1}",product,propertyInfo.Name);
+                var key = String.Format("{0}_{1}", product, propertyInfo.Name);
                 var value = System.Environment.GetEnvironmentVariable(key);
                 if (!String.IsNullOrEmpty(value))
                 {

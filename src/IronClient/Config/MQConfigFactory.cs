@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace IronIO.Config
+﻿namespace IronIO.Config
 {
     internal class MQConfigFactory : ConfigurationFactory
     {
         private ConfigurationFactory configurationFactory;
-        public MQConfigFactory() : this ( new DefaultConfigurationFactory())
-        {
 
+        public MQConfigFactory()
+            : this(new DefaultConfigurationFactory())
+        {
         }
+
         public MQConfigFactory(ConfigurationFactory configuarationFactory)
         {
             this.configurationFactory = configuarationFactory;
         }
+
         public override Configuration GetConfiguartion()
         {
             Configuration config = configurationFactory.GetConfiguartion();

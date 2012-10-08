@@ -1,13 +1,11 @@
-﻿using IronIO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using IronIO.Data;
+﻿using System;
 using System.Collections.Generic;
+using IronIO;
+using IronIO.Data;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestIronWorker
 {
-    
-    
     /// <summary>
     ///This is a test class for IronWorkerTest and is intended
     ///to contain all IronWorkerTest Unit Tests
@@ -15,8 +13,6 @@ namespace TestIronWorker
     [TestClass()]
     public class IronWorkerTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -36,7 +32,8 @@ namespace TestIronWorker
         }
 
         #region Additional test attributes
-        // 
+
+        //
         //You can use the following additional attributes as you write your tests:
         //
         //Use ClassInitialize to run code before running the first test in the class
@@ -63,8 +60,8 @@ namespace TestIronWorker
         //{
         //}
         //
-        #endregion
 
+        #endregion Additional test attributes
 
         /// <summary>
         ///A test for Tasks
@@ -72,7 +69,7 @@ namespace TestIronWorker
         [TestMethod()]
         public void TasksTest()
         {
-            IronWorker target = new IronWorker(); 
+            IronWorker target = new IronWorker();
             int page = 0; // TODO: Initialize to an appropriate value
             int per_page = 0; // TODO: Initialize to an appropriate value
             StatusEnum statusFilter = StatusEnum.All; // TODO: Initialize to an appropriate value
@@ -89,7 +86,7 @@ namespace TestIronWorker
         [TestMethod()]
         public void LogTest()
         {
-           IronWorker target = new IronWorker();
+            IronWorker target = new IronWorker();
             string id = string.Empty; // TODO: Initialize to an appropriate value
             string expected = string.Empty; // TODO: Initialize to an appropriate value
             string actual;
@@ -103,12 +100,12 @@ namespace TestIronWorker
         [TestMethod()]
         public void TaskTest()
         {
-            IronWorker target = new IronWorker(); 
-            string id = string.Empty ; // TODO: Initialize to an appropriate value
+            IronWorker target = new IronWorker();
+            string id = string.Empty; // TODO: Initialize to an appropriate value
             TaskInfo actual;
             actual = target.Task(id);
             Assert.IsNotNull(actual);
-            Assert.AreEqual( id,actual.id);
+            Assert.AreEqual(id, actual.id);
         }
     }
 }

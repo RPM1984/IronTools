@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
 using System.Net;
 using IronIO.Config;
 using Newtonsoft.Json;
+
 namespace IronIO
 {
     public class IronClient
@@ -31,7 +30,7 @@ namespace IronIO
             if (product == "iron_cache")
                 configFactory = new CacheConfigFactory(configFactory);
 
-            configFactory = new JsonConfigFactory(configFactory,"~/.iron.json");
+            configFactory = new JsonConfigFactory(configFactory, "~/.iron.json");
             configFactory = new EnvConfigFactory(configFactory);
             configFactory = new JsonConfigFactory(configFactory, "iron.json");
             configFactory = new JsonConfigFactory(configFactory, configFile);
@@ -49,23 +48,30 @@ namespace IronIO
         }
 
         public Configuration Config { get; set; }
+
         private Random _rng;
+
         private Random Rng { get { return _rng ?? (_rng = new Random()); } }
+
         private NameValueCollection Headers { get; set; }
+
         private string baseUrl;
+
         private string BaseUrl
         {
             get
             {
-                return baseUrl ?? ( baseUrl = String.Format("{0}://{1}:{2}/{3}/projects/{4}/", this.Config.Protocol, this.Config.Host,
-                    this.Config.Port, this.Config.ApiVersion,this.Config.ProjectId));
+                return baseUrl ?? (baseUrl = String.Format("{0}://{1}:{2}/{3}/projects/{4}/", this.Config.Protocol, this.Config.Host,
+                    this.Config.Port, this.Config.ApiVersion, this.Config.ProjectId));
             }
         }
+
         private void BuildHeaders()
         {
             this.Headers = new NameValueCollection();
             this.Headers["Authorization"] = String.Format("OAuth {0}", this.Config.Token);
         }
+
         private bool ExponentialBackoff(Random rng, int tries)
         {
             // source: http://aws.amazon.com/articles/1394
@@ -73,23 +79,22 @@ namespace IronIO
             System.Threading.Thread.Sleep(timespan);
             return true;
         }
+
         public string Request(string url, string method, string body = null, NameValueCollection headers = null, bool retry = true)
         {
             if (headers != null)
-                foreach (var key in this.Headers.Keys.OfType<string>().Except( headers.Keys.OfType<string>()))
+                foreach (var key in this.Headers.Keys.OfType<string>().Except(headers.Keys.OfType<string>()))
                     headers.Add(key, this.Headers[key]);
             else
                 headers = this.Headers;
 
-
             url = this.BaseUrl + url;
-            HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(url);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
             request.ContentType = "application/json";
             request.Accept = "application/json";
             request.UserAgent = String.Format("{0} (version: {1})", this.Config.Name, this.Config.ClientVersion);
             request.Headers.Add(headers);
             request.Method = method;
-
 
             if (body != null)
             {
@@ -130,7 +135,6 @@ namespace IronIO
                 throw new System.Web.HttpException((int)response.StatusCode, error.Message);
             }
             return json;
-
         }
 
         public string Delete(string url, NameValueCollection headers = null, bool retry = true)
@@ -145,12 +149,12 @@ namespace IronIO
 
         public string Post(string url, string body = "", NameValueCollection headers = null, bool retry = true)
         {
-            return Request( url, "POST", body:body,headers:headers,retry:retry);
+            return Request(url, "POST", body: body, headers: headers, retry: retry);
         }
+
         public string Put(string url, string body = "", NameValueCollection headers = null, bool retry = true)
         {
             return Request(url, "PUT", body: body, headers: headers, retry: retry);
         }
-
     }
 }
