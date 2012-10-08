@@ -172,12 +172,25 @@ namespace IronIO
 
         public ScheduleTask Schedule(string id)
         {
-            throw new NotImplementedException();
+            var url = string.Format("{0}/{1}", _scheduleCore, id);
+
+            var response = _client.Get(url);
+
+            var scheduleInfo = JsonConvert.DeserializeObject<ScheduleTask>(response);
+
+            return scheduleInfo;
         }
 
         public void CancelSchedule(string id)
         {
-            throw new NotImplementedException();
+            var url = string.Format("{0}/{1}/cancel", _scheduleCore, id);
+
+            var response = _client.Post(url);
+
+            #if DEBUG
+            var msg = JsonConvert.DeserializeObject<Dictionary<string,string>>(response)["msg"];
+            #endif
+            
         }
 
         public IList<string> ScheduleWorker(params ScheduleTask[] schedules)
