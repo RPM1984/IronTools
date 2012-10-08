@@ -17,6 +17,8 @@ namespace IronIO.Data
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "end_at")]
         public DateTime? end_at { get; set; }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore, PropertyName = "id")]
         public string id { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
@@ -36,6 +38,8 @@ namespace IronIO.Data
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "priority")]
         public int priority { get; set; }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore, PropertyName = "project_id")]
         public string project_id { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
@@ -64,5 +68,8 @@ namespace IronIO.Data
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "updated_at")]
         public DateTime? updated_at { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "payload")]
+        public string payload { get; set; }
     }
 }

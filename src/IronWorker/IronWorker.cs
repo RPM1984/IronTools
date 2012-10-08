@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using IronIO.Data;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace IronIO
 {
@@ -19,7 +20,7 @@ namespace IronIO
 
         #region Tasks
 
-        public IList<TaskInfo> Queue(IEnumerable<Task> tasks)
+        public IList<string> Queue(IEnumerable<Task> tasks)
         {
             var body = JsonConvert.SerializeObject(new
             {
@@ -27,11 +28,12 @@ namespace IronIO
             });
             string url = _taskCore;
             var response = _client.Post(url, body: body);
-            var queueResponse = JsonConvert.DeserializeObject<QueueResponse>(response);
-            return queueResponse.Tasks;
+            JObject o = JObject.Parse(response);
+            var result = o.SelectToken("tasks").Select(s => (string)s.SelectToken("id")).ToList();
+            return result;
         }
 
-        public IList<TaskInfo> Queue(string code_name, string payload, int priority = 0, int timeout = 3600, int delay = 0)
+        public IList<string> Queue(string code_name, string payload, int priority = 0, int timeout = 3600, int delay = 0)
         {
             var tasks = new Task[]
                 {
@@ -178,16 +180,21 @@ namespace IronIO
             throw new NotImplementedException();
         }
 
-        public IList<ScheduleTask> ScheduleWorker(params ScheduleTask[] schedules)
+        public IList<string> ScheduleWorker(params ScheduleTask[] schedules)
         {
+            // Validate the shedules
+            foreach (var schedule in schedules)
+                schedule.payload = schedule.payload ?? "{}";
+
             var url = _scheduleCore;
             Dictionary<string, IList<ScheduleTask>> d = new Dictionary<string, IList<ScheduleTask>>();
             d["schedules"] = schedules;
             var json = JsonConvert.SerializeObject(d);
             var responseJson = _client.Post(url, body: json);
-            var response = JsonConvert.DeserializeObject(responseJson) as Dictionary<string, object>;
-            var s = response["schedules"] as ScheduleTask[];
-            return s;
+            JObject o = JObject.Parse(responseJson);
+            var result = o.SelectToken("schedules").Select(s => (string)s.SelectToken("id")).ToList();
+            return result;
+
         }
 
         #endregion Schedule Tasks

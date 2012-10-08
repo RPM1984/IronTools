@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\CodeInfo.cs" />
-    <Compile Include="Data\QueueResponse.cs" />
     <Compile Include="Data\ScheduleTask.cs" />
     <Compile Include="Data\Task.cs" />
     <Compile Include="Data\TaskInfo.cs" />
