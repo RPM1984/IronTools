@@ -28,7 +28,7 @@ namespace IronIO
             string url = _taskCore;
             var response = _client.Post(url, body: body);
             var queueResponse = JsonConvert.DeserializeObject<QueueResponse>(response);
-            return queueResponse.tasks;
+            return queueResponse.Tasks;
         }
 
         public IList<TaskInfo> Queue(string code_name, string payload, int priority = 0, int timeout = 3600, int delay = 0)

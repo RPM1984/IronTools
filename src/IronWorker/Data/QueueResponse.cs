@@ -6,8 +6,10 @@ namespace IronIO.Data
     [JsonObject]
     internal class QueueResponse
     {
-        public string msg { get; set; }
+        [JsonProperty(PropertyName="msg")]
+        public string Message { get; set; }
 
-        public List<TaskInfo> tasks { get; set; }
+        [JsonProperty(PropertyName="tasks")]
+        public List<TaskInfo> Tasks { get; set; }
     }
 }
