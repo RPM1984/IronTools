@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using IronIO.Data;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace IronIO
 {
@@ -28,8 +27,8 @@ namespace IronIO
             });
             string url = _taskCore;
             var response = _client.Post(url, body: body);
-            JObject o = JObject.Parse(response);
-            var result = o.SelectToken("tasks").Select(s => (string)s.SelectToken("id")).ToList();
+            var template = new { msg = string.Empty, tasks = new[] { new { id = string.Empty } } };
+            var result = JsonConvert.DeserializeAnonymousType(response, template).tasks.Select(t => t.id).ToList();
             return result;
         }
 
@@ -204,8 +203,8 @@ namespace IronIO
             d["schedules"] = schedules;
             var json = JsonConvert.SerializeObject(d);
             var responseJson = _client.Post(url, body: json);
-            JObject o = JObject.Parse(responseJson);
-            var result = o.SelectToken("schedules").Select(s => (string)s.SelectToken("id")).ToList();
+            var template = new { msg = string.Empty, schedules = new[] { new { id = string.Empty } } };
+            var result = JsonConvert.DeserializeAnonymousType(responseJson, template).schedules.Select(s => s.id).ToList();
             return result;
 
         }
