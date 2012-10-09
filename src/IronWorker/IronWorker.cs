@@ -37,11 +37,11 @@ namespace IronIO
             var tasks = new Task[]
                 {
                     new Task(){
-                                code_name = code_name,
-                                payload = payload,
-                                priority = priority,
-                                timeout = timeout,
-                                delay = delay
+                                CodeName = code_name,
+                                Payload = payload,
+                                Priority = priority,
+                                Timout = timeout,
+                                Delay = delay
                             }
                 };
             return Queue(tasks);

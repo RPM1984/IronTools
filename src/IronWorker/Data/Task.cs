@@ -6,17 +6,21 @@ namespace IronIO.Data
     [JsonObject]
     public class Task
     {
-        public string code_name { get; set; }
+        [JsonProperty("code_name")]
+        public string CodeName { get; set; }
 
-        public string payload { get; set; }
+        [JsonProperty("payload")]
+        public string Payload { get; set; }
 
         [DefaultValue(0)]
-        public int priority { get; set; }
+        [JsonProperty("priority")]
+        public int Priority { get; set; }
 
         [DefaultValue(3600)]
-        public int timeout { get; set; }
+        [JsonProperty("timeout")]
+        public int Timout { get; set; }
 
         [DefaultValue(0)]
-        public int delay { get; set; }
+        public int Delay { get; set; }
     }
 }
