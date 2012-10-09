@@ -116,7 +116,7 @@ namespace IronIO
 
             var json = JsonConvert.SerializeObject(new Dictionary<string, Message[]>()
             {
-                {"messages" , msgs.Select(msg => new Message() { Body = msg, Timeout = timeout, Delay = delay, Expires_In = expires_in }).ToArray()}
+                {"messages" , msgs.Select(msg => new Message() { Body = msg, Timeout = timeout, Delay = delay, ExpiresIn = expires_in }).ToArray()}
             }, settings);
             client.Post("queues/" + name + "/messages", json
                );
