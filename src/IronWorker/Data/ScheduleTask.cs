@@ -19,57 +19,57 @@ namespace IronIO.Data
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "id")]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "last_run_time")]
-        public DateTime? last_run_time { get; set; }
+        public DateTime? LastRunTime { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "msg")]
         [DefaultValue("")]
-        public string msg { get; set; }
+        public string Message { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "next_start")]
-        public DateTime? next_start { get; set; }
+        public DateTime? NextStart { get; set; }
 
         [DefaultValue(0)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "priority")]
-        public int priority { get; set; }
+        public int Priority { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "project_id")]
-        public string project_id { get; set; }
+        public string ProjectId { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "run_count")]
         [DefaultValue(0)]
-        public int run_count { get; set; }
+        public int RunCount { get; set; }
 
         [DefaultValue(0)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             PropertyName = "run_every")]
-        public int run_every { get; set; }
+        public int RunEvery { get; set; }
 
         [DefaultValue(0)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "run_times")]
-        public int run_times { get; set; }
+        public int RunTimes { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "start_at")]
-        public string start_at { get; set; }
+        public string StartAt { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "status")]
         [DefaultValue("")]
-        public string status { get; set; }
+        public string Status { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "updated_at")]
-        public DateTime? updated_at { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "payload")]
-        public string payload { get; set; }
+        public string Payload { get; set; }
     }
 }

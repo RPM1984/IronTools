@@ -196,7 +196,7 @@ namespace IronIO
         {
             // Validate the shedules
             foreach (var schedule in schedules)
-                schedule.payload = schedule.payload ?? "{}";
+                schedule.Payload = schedule.Payload ?? "{}";
 
             var url = _scheduleCore;
             Dictionary<string, IList<ScheduleTask>> d = new Dictionary<string, IList<ScheduleTask>>();

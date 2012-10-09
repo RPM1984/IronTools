@@ -79,8 +79,8 @@ namespace TestIronWorker
             ScheduleTask schedules = new ScheduleTask()
             {
                 code_name="IronToolsTest",
-                run_times = 10,
-                run_every = 60 * 60
+                RunTimes = 10,
+                RunEvery = 60 * 60
             }; // TODO: Initialize to an appropriate value
             int expected = 1; // TODO: Initialize to an appropriate value
             IList<string> actual;
