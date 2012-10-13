@@ -60,7 +60,7 @@ namespace IronIO.Data
         public int Timeout { get; set; }
 
         [DefaultValue(3600)]
-        [JsonProperty("timeout")]
+        [JsonProperty("percent")]
         public int percent { get; set; }
 
         [JsonProperty("payload")]

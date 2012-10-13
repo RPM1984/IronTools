@@ -40,7 +40,7 @@ namespace IronIO
                                 CodeName = code_name,
                                 Payload = payload,
                                 Priority = priority,
-                                Timout = timeout,
+                                Timeout = timeout,
                                 Delay = delay
                             }
                 };
