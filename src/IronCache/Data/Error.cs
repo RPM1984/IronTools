@@ -11,11 +11,17 @@ namespace IronIO.Data
 {
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Cache error 
+    /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class Error
     {
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the message from Iron.io
+        /// </summary>
         [JsonProperty("msg")]
         public string Message
         {
