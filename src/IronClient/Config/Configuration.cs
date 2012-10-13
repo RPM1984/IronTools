@@ -10,11 +10,17 @@ namespace IronIO.Config
 
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Configuration for use with IronClient
+    /// </summary>
     [JsonObject]
     public class Configuration
     {
         #region Properties
 
+        /// <summary>
+        /// Gets or sets Iron.io API version
+        /// </summary>
         [DefaultValue(1)]
         [JsonProperty("api_version")]
         public int ApiVersion
@@ -22,23 +28,35 @@ namespace IronIO.Config
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the version of the client
+        /// </summary>
         [JsonProperty("version")]
         public string ClientVersion
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the host name or address of the Iron.io API endpoint
+        /// </summary>
         [JsonProperty("host")]
         public string Host
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the name of the client
+        /// </summary>
         public string Name
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the port on which to connect to the Iron.io API endpoint
+        /// </summary>
         [DefaultValue(443)]
         [JsonProperty("port")]
         public int Port
@@ -46,12 +64,18 @@ namespace IronIO.Config
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the project identifier available from the HUD
+        /// </summary>
         [JsonProperty("project_id")]
         public string ProjectId
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the transport protocol to use
+        /// </summary>
         [DefaultValue("https")]
         [JsonProperty("protocol")]
         public string Protocol
@@ -59,6 +83,9 @@ namespace IronIO.Config
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the token available from the HUD
+        /// </summary>
         [JsonProperty("token")]
         public string Token
         {
