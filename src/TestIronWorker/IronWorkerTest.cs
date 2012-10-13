@@ -23,6 +23,9 @@ namespace TestIronWorker
     {
         #region Fields
 
+        /// <summary>
+        /// Current test context
+        /// </summary>
         private TestContext testContextInstance;
 
         #endregion Fields
@@ -37,11 +40,12 @@ namespace TestIronWorker
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
+
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
@@ -73,8 +77,8 @@ namespace TestIronWorker
             int page = 0; // TODO: Initialize to an appropriate value
             int per_page = 10; // TODO: Initialize to an appropriate value
             StatusEnum statusFilter = StatusEnum.All; // TODO: Initialize to an appropriate value
-            Nullable<DateTime> from_time = null; // TODO: Initialize to an appropriate value
-            Nullable<DateTime> to_time = null; // TODO: Initialize to an appropriate value
+            DateTime? from_time = null; // TODO: Initialize to an appropriate value
+            DateTime? to_time = null; // TODO: Initialize to an appropriate value
             IList<Task> actual;
             actual = target.Tasks(page, per_page, statusFilter, from_time, to_time);
             Assert.IsNotNull(actual);
