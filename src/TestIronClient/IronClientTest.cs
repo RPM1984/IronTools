@@ -19,6 +19,9 @@ namespace TestIronClient
     {
         #region Fields
 
+        /// <summary>
+        /// Current test context
+        /// </summary>
         private TestContext testContextInstance;
 
         #endregion Fields
@@ -33,11 +36,12 @@ namespace TestIronClient
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
+
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
