@@ -75,7 +75,7 @@ namespace TestIronWorker
             StatusEnum statusFilter = StatusEnum.All; // TODO: Initialize to an appropriate value
             Nullable<DateTime> from_time = null; // TODO: Initialize to an appropriate value
             Nullable<DateTime> to_time = null; // TODO: Initialize to an appropriate value
-            IList<TaskInfo> actual;
+            IList<Task> actual;
             actual = target.Tasks(page, per_page, statusFilter, from_time, to_time);
             Assert.IsNotNull(actual);
         }
@@ -104,11 +104,11 @@ namespace TestIronWorker
             var tasks = target.Tasks(per_page:1);
             Assert.AreEqual(1, tasks.Count);
 
-            string id = tasks[0].id;
-            TaskInfo actual;
+            string id = tasks[0].Id;
+            Task actual;
             actual = target.Task(id);
             Assert.IsNotNull(actual);
-            Assert.AreEqual(id, actual.id);
+            Assert.AreEqual(id, actual.Id);
         }
     }
 }

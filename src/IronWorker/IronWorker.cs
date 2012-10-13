@@ -47,13 +47,13 @@ namespace IronIO
             return Queue(tasks);
         }
 
-        public TaskInfo Task(string id)
+        public Task Task(string id)
         {
             var url = string.Format("{0}/{1}", _taskCore, id);
 
             var response = _client.Get(url);
 
-            var taskInfo = JsonConvert.DeserializeObject<TaskInfo>(response);
+            var taskInfo = JsonConvert.DeserializeObject<Task>(response);
 
             return taskInfo;
         }
@@ -74,7 +74,7 @@ namespace IronIO
             return status.ContainsKey("msg") && status["msg"] == "Cancelled";
         }
 
-        public IList<TaskInfo> Tasks(int page = 0, int per_page = 30, StatusEnum statusFilter = StatusEnum.All, DateTime? from_time = null, DateTime? to_time = null)
+        public IList<Task> Tasks(int page = 0, int per_page = 30, StatusEnum statusFilter = StatusEnum.All, DateTime? from_time = null, DateTime? to_time = null)
         {
             StringBuilder queryParameters = new StringBuilder();
 
@@ -102,11 +102,11 @@ namespace IronIO
             var url = String.Format("{0}?{1}", _taskCore, queryParameters.ToString());
 
             var json = _client.Get(url);
-            var d = JsonConvert.DeserializeObject<Dictionary<string, TaskInfo[]>>(json);
-            TaskInfo[] tasks;
+            var d = JsonConvert.DeserializeObject<Dictionary<string, Task[]>>(json);
+            Task[] tasks;
             if (d.TryGetValue("tasks", out tasks))
                 return tasks;
-            return new TaskInfo[0];
+            return new Task[0];
         }
 
         #endregion Tasks
