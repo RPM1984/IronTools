@@ -8,21 +8,35 @@ namespace IronIO.Config
 {
     using System;
 
+    /// <summary>
+    /// Configuration factory for creating configurations from environment variables
+    /// </summary>
     internal class EnvConfigFactory : ConfigurationFactory
     {
         #region Fields
 
+        /// <summary>
+        /// wrapped configuration factory
+        /// </summary>
         private ConfigurationFactory configurationFactory;
 
         #endregion Fields
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnvConfigFactory" /> class.    
+        /// </summary>
         public EnvConfigFactory()
             : this(new DefaultConfigurationFactory())
         {
+            // Empty constructor
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnvConfigFactory" /> class.
+        /// </summary>
+        /// <param name="configuarationFactory">Configuration factory to wrap</param>
         public EnvConfigFactory(ConfigurationFactory configuarationFactory)
         {
             this.configurationFactory = configuarationFactory;
@@ -32,14 +46,22 @@ namespace IronIO.Config
 
         #region Methods
 
+        /// <summary>
+        /// Constructs a Configuration.
+        /// </summary>
+        /// <returns>A Configuration based on environment variables</returns>
         public override Configuration GetConfiguartion()
         {
-            var envConfig = ConfigFromEnv();
-            var baseConfig = configurationFactory.GetConfiguartion();
+            var envConfig = this.ConfigFromEnv();
+            var baseConfig = this.configurationFactory.GetConfiguartion();
             AutoMapper.Mapper.Map<Configuration, Configuration>(envConfig, baseConfig);
             return baseConfig;
         }
 
+        /// <summary>
+        /// Utility function to create a Configuration from environment variables
+        /// </summary>
+        /// <returns>A Configuration based on environment variables</returns>
         private Configuration ConfigFromEnv()
         {
             Configuration config = new Configuration();
@@ -47,13 +69,14 @@ namespace IronIO.Config
 
             foreach (var propertyInfo in config.GetType().GetProperties(System.Reflection.BindingFlags.SetProperty))
             {
-                var key = String.Format("{0}_{1}", product, propertyInfo.Name);
+                var key = string.Format("{0}_{1}", product, propertyInfo.Name);
                 var value = System.Environment.GetEnvironmentVariable(key);
-                if (!String.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     propertyInfo.SetValue(config, Convert.ChangeType(value, propertyInfo.PropertyType), null);
                 }
             }
+
             return config;
         }
 
