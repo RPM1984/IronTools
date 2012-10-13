@@ -11,16 +11,25 @@ namespace IronIO.Data
 
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Represents a Task that repeats on a Schedule
+    /// </summary>
     [JsonObject]
     public class ScheduleTask
     {
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the name of the code to schedule
+        /// </summary>
         public string CodeName
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the DateTime of the creation of the Schedule
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "created_at")]
         public DateTime? CreatedAt
@@ -28,6 +37,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the DateTime of the End of the Schedule
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "end_at")]
         public DateTime? EndAt
@@ -35,6 +47,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the Schedule identifier
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "id")]
         public string Id
@@ -42,6 +57,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the DateTime of the last run of the scheduled task
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "last_run_time")]
         public DateTime? LastRunTime
@@ -49,6 +67,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets a message returned by the Iron.io API
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "msg")]
         [DefaultValue("")]
@@ -57,6 +78,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the DateTime of the next start of the schedule task
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "next_start")]
         public DateTime? NextStart
@@ -64,12 +88,18 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the payload to be handed to the code
+        /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "payload")]
         public string Payload
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the priority of the task
+        /// </summary>
         [DefaultValue(0)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "priority")]
         public int Priority
@@ -77,6 +107,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the project identifier
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "project_id")]
         public string ProjectId
@@ -84,6 +117,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the number of times the schedule has already run
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "run_count")]
         [DefaultValue(0)]
@@ -92,6 +128,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the interval in seconds
+        /// </summary>
         [DefaultValue(0)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             PropertyName = "run_every")]
@@ -100,6 +139,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the max number of times to run the task
+        /// </summary>
         [DefaultValue(0)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "run_times")]
         public int RunTimes
@@ -107,6 +149,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the DateTime to begin running the task
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "start_at")]
         public string StartAt
@@ -114,6 +159,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the current status of the Schedule
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "status")]
         [DefaultValue("")]
@@ -122,6 +170,9 @@ namespace IronIO.Data
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the DateTime of the last update to the Schedule
+        /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore, PropertyName = "updated_at")]
         public DateTime? UpdatedAt
