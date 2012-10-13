@@ -22,17 +22,27 @@ namespace IronCacheTests
     {
         #region Fields
 
+        /// <summary>
+        /// Reference to the test context
+        /// </summary>
         private TestContext testContextInstance;
-        private string _projectId, _token;
+
+        /// <summary>
+        /// Project identifier and token
+        /// </summary>
+        private string projectId, token;
 
         #endregion Fields
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TestIronCache" /> class.    
+        /// </summary>
         public TestIronCache()
         {
-            _projectId = ConfigurationManager.AppSettings["IRONIO_PROJECT_ID"];
-            _token = ConfigurationManager.AppSettings["IRONIO_TOKEN"];
+            this.projectId = ConfigurationManager.AppSettings["IRONIO_PROJECT_ID"];
+            this.token = ConfigurationManager.AppSettings["IRONIO_TOKEN"];
         }
 
         #endregion Constructors
@@ -47,11 +57,12 @@ namespace IronCacheTests
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
+
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
@@ -59,11 +70,14 @@ namespace IronCacheTests
 
         #region Methods
 
+        /// <summary>
+        /// Test Add / Get integer
+        /// </summary>
         [TestMethod]
         public void AddGetIntTest()
         {
-            string projectId = _projectId;
-            string token = _token;
+            string projectId = this.projectId;
+            string token = this.token;
             IronCache target = new IronCache(projectId, token);
 
             int value = 10;
@@ -77,11 +91,14 @@ namespace IronCacheTests
             Assert.AreEqual(value, actual);
         }
 
+        /// <summary>
+        /// Test Add / Get string
+        /// </summary>
         [TestMethod]
         public void AddGetTest()
         {
-            string projectId = _projectId;
-            string token = _token;
+            string projectId = this.projectId;
+            string token = this.token;
             IronCache target = new IronCache(projectId, token);
 
             string value = "this is some arbitrary text";
@@ -101,8 +118,8 @@ namespace IronCacheTests
         [TestMethod]
         public void CachesTest()
         {
-            string projectId = _projectId;
-            string token = _token;
+            string projectId = this.projectId;
+            string token = this.token;
             IronCache target = new IronCache(projectId, token);
             var expected = 1;
             IList<Cache> actual;
@@ -111,11 +128,14 @@ namespace IronCacheTests
             Assert.AreEqual(expected, actual.Count);
         }
 
+        /// <summary>
+        /// Test Get on missing key
+        /// </summary>
         [TestMethod]
         public void GetMissingValueTest()
         {
-            string projectId = _projectId;
-            string token = _token;
+            string projectId = this.projectId;
+            string token = this.token;
             IronCache target = new IronCache(projectId, token);
 
             string key = "this is an arbitrary key";
@@ -126,28 +146,34 @@ namespace IronCacheTests
             Assert.IsNull(actual);
         }
 
+        /// <summary>
+        /// Test increment on integer
+        /// </summary>
         [TestMethod]
         public void IncrementExistingIntegerTest()
         {
-            string projectId = _projectId;
-            string token = _token;
+            string projectId = this.projectId;
+            string token = this.token;
             IronCache target = new IronCache(projectId, token);
 
             string key = "cf435dc2-7f12-4f37-94c2-26077b3cd414"; // random unique identifier
             string cache = "test_cache";
 
-            //target.Remove(cache, key);
+            // target.Remove(cache, key);
             var expected = 1;
             target.Put(cache, key, 0, false, false, 0);
             var actual = target.Increment(cache, key, 1);
             Assert.AreEqual(expected, actual);
         }
 
+        /// <summary>
+        /// Test incrementing a non existing key
+        /// </summary>
         [TestMethod]
         public void IncrementNonExistingTest()
         {
-            string projectId = _projectId;
-            string token = _token;
+            string projectId = this.projectId;
+            string token = this.token;
             IronCache target = new IronCache(projectId, token);
 
             string key = "82de17a0-cab9-45a5-a851-bccb210a9e1f";
@@ -169,8 +195,8 @@ namespace IronCacheTests
         [TestMethod]
         public void IronCacheConstructorTest()
         {
-            string projectId = _projectId;
-            string token = _token;
+            string projectId = this.projectId;
+            string token = this.token;
             IronCache target = new IronCache(projectId, token);
 
             Assert.IsNotNull(target);
