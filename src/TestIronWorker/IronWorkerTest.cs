@@ -71,7 +71,7 @@ namespace TestIronWorker
         {
             IronWorker target = new IronWorker();
             int page = 0; // TODO: Initialize to an appropriate value
-            int per_page = 0; // TODO: Initialize to an appropriate value
+            int per_page = 10; // TODO: Initialize to an appropriate value
             StatusEnum statusFilter = StatusEnum.All; // TODO: Initialize to an appropriate value
             Nullable<DateTime> from_time = null; // TODO: Initialize to an appropriate value
             Nullable<DateTime> to_time = null; // TODO: Initialize to an appropriate value
