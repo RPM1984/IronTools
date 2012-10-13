@@ -5,8 +5,15 @@
 //-----------------------------------------------------------------------
 namespace IronIO.Config
 {
+    /// <summary>
+    /// Default configuration factory
+    /// </summary>
     internal class DefaultConfigurationFactory : ConfigurationFactory
     {
+        /// <summary>
+        /// Creates the most basic configuration for use with IronClient
+        /// </summary>
+        /// <returns>A configuration for use with IronClient</returns>
         public override Configuration GetConfiguartion()
         {
             return new Configuration()
