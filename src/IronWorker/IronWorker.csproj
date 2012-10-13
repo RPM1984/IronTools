@@ -49,7 +49,6 @@
     <Compile Include="Data\CodeInfo.cs" />
     <Compile Include="Data\ScheduleTask.cs" />
     <Compile Include="Data\Task.cs" />
-    <Compile Include="Data\TaskInfo.cs" />
     <Compile Include="IronWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
