@@ -1,13 +1,26 @@
-﻿using System;
-using System.IO;
-using Newtonsoft.Json;
+﻿//-----------------------------------------------------------------------
+// <copyright file="JsonConfigFactory.cs" company="Oscar Deits">
+//     Usage of the works is permitted provided that this instrument is retained with the works, so that any enity that uses the works is notified of this instrument. DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace IronIO.Config
 {
+    using System;
+    using System.IO;
+
+    using Newtonsoft.Json;
+
     internal class JsonConfigFactory : ConfigurationFactory
     {
+        #region Fields
+
         private ConfigurationFactory configurationFactory;
         private string filePath;
+
+        #endregion Fields
+
+        #region Constructors
 
         public JsonConfigFactory()
             : this(new DefaultConfigurationFactory())
@@ -30,6 +43,10 @@ namespace IronIO.Config
             this.filePath = filePath;
         }
 
+        #endregion Constructors
+
+        #region Methods
+
         public override Configuration GetConfiguartion()
         {
             var fileConfig = ConfigFromFile(filePath);
@@ -50,5 +67,7 @@ namespace IronIO.Config
             Configuration config = JsonConvert.DeserializeObject<Configuration>(json);
             return config;
         }
+
+        #endregion Methods
     }
 }

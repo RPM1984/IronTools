@@ -1,10 +1,22 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="EnvConfigFactory.cs" company="Oscar Deits">
+//     Usage of the works is permitted provided that this instrument is retained with the works, so that any enity that uses the works is notified of this instrument. DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace IronIO.Config
 {
+    using System;
+
     internal class EnvConfigFactory : ConfigurationFactory
     {
+        #region Fields
+
         private ConfigurationFactory configurationFactory;
+
+        #endregion Fields
+
+        #region Constructors
 
         public EnvConfigFactory()
             : this(new DefaultConfigurationFactory())
@@ -15,6 +27,10 @@ namespace IronIO.Config
         {
             this.configurationFactory = configuarationFactory;
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         public override Configuration GetConfiguartion()
         {
@@ -40,5 +56,7 @@ namespace IronIO.Config
             }
             return config;
         }
+
+        #endregion Methods
     }
 }

@@ -1,98 +1,85 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using IronIO;
-using System;
-using IronIO.Data;
-using System.Collections.Generic;
+﻿//-----------------------------------------------------------------------
+// <copyright file="TestIronWorker.cs" company="Oscar Deits">
+//     Usage of the works is permitted provided that this instrument is retained with the works, so that any enity that uses the works is notified of this instrument. DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace TestIronWorker
 {
+    using System;
+    using System.Collections.Generic;
+
+    using IronIO;
+    using IronIO.Data;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     /// <summary>
-    /// Summary description for UnitTest1
+    /// Tests IronWorker
     /// </summary>
     [TestClass]
     public class TestIronWorker
     {
-        public TestIronWorker()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
+        #region Fields
 
         private TestContext testContextInstance;
 
+        #endregion Fields
+
+        #region Constructors
+
+        public TestIronWorker()
+        {
+            // TODO: Add constructor logic here
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
+        /// Gets or sets the test context which provides
+        /// information about and functionality for the current test run.
+        /// </summary>
         public TestContext TestContext
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
-        #region Additional test attributes
+        #endregion Properties
 
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+        #region Methods
 
-        #endregion Additional test attributes
+        /// <summary>
+        /// A test for CancelSchedule
+        /// </summary>
+        [TestMethod]
+        public void TestCancelSchedule()
+        {
+            string projectId = string.Empty; // TODO: Initialize to an appropriate value
+            string token = string.Empty; // TODO: Initialize to an appropriate value
+            IronWorker target = new IronWorker(projectId, token); // TODO: Initialize to an appropriate value
+            string id = string.Empty; // TODO: Initialize to an appropriate value
+            target.CancelSchedule(id);
+        }
 
         [TestMethod]
         public void TestMethod1()
         {
-            //
             // TODO: Add test logic here
-            //
         }
 
         /// <summary>
-        ///A test for ScheduleWorker
-        ///</summary>
-        [TestMethod()]
-        public void TestScheduleWorker()
-        {
-            IronWorker target = new IronWorker(); // TODO: Initialize to an appropriate value
-            ScheduleTask schedules = new ScheduleTask()
-            {
-                code_name="IronToolsTest",
-                RunTimes = 10,
-                RunEvery = 60 * 60
-            }; // TODO: Initialize to an appropriate value
-            int expected = 1; // TODO: Initialize to an appropriate value
-            IList<string> actual;
-            actual = target.ScheduleWorker(schedules);
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual.Count);
-        }
-
-        /// <summary>
-        ///A test for Schedule
-        ///</summary>
-        [TestMethod()]
+        /// A test for Schedule
+        /// </summary>
+        [TestMethod]
         public void TestSchedule()
         {
             string projectId = string.Empty; // TODO: Initialize to an appropriate value
@@ -106,16 +93,29 @@ namespace TestIronWorker
         }
 
         /// <summary>
-        ///A test for CancelSchedule
-        ///</summary>
-        [TestMethod()]
-        public void TestCancelSchedule()
+        /// A test for ScheduleWorker
+        /// </summary>
+        [TestMethod]
+        public void TestScheduleWorker()
         {
-            string projectId = string.Empty; // TODO: Initialize to an appropriate value
-            string token = string.Empty; // TODO: Initialize to an appropriate value
-            IronWorker target = new IronWorker(projectId, token); // TODO: Initialize to an appropriate value
-            string id = string.Empty; // TODO: Initialize to an appropriate value
-            target.CancelSchedule(id);
+            IronWorker target = new IronWorker(); // TODO: Initialize to an appropriate value
+            ScheduleTask schedules = new ScheduleTask()
+            {
+                code_name = "IronToolsTest",
+                RunTimes = 10,
+                RunEvery = 60 * 60
+            }; // TODO: Initialize to an appropriate value
+            int expected = 1; // TODO: Initialize to an appropriate value
+            IList<string> actual;
+            actual = target.ScheduleWorker(schedules);
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(expected, actual.Count);
         }
+
+        #endregion Methods
+
+        #region Other
+
+        #endregion Other
     }
 }

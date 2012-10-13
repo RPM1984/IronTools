@@ -1,4 +1,9 @@
-﻿namespace IronIO.Config
+﻿//-----------------------------------------------------------------------
+// <copyright file="ArgsConfigFactory.cs" company="Oscar Deits">
+//     Usage of the works is permitted provided that this instrument is retained with the works, so that any enity that uses the works is notified of this instrument. DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace IronIO.Config
 {
     internal class ArgsConfigFactory : ConfigurationFactory
     {
@@ -15,7 +20,9 @@
 
         public ArgsConfigFactory(string name, string version, string product, string host, int port, string projectId, string token, string protocol, int apiVersion)
             : this(new DefaultConfigurationFactory(), name, version, product, host, port, projectId, token, protocol, apiVersion)
-        { }
+        {
+            // Empty constructor
+        }
 
         public ArgsConfigFactory(ConfigurationFactory configFactory, string name, string version, string product, string host, int port, string projectId, string token, string protocol, int apiVersion)
         {
@@ -34,7 +41,7 @@
 
         public override Configuration GetConfiguartion()
         {
-            Configuration baseConfig = configFactory.GetConfiguartion();
+            Configuration baseConfig = this.configFactory.GetConfiguartion();
             Configuration argsConfig = new Configuration()
             {
                 ApiVersion = this.apiVersion,

@@ -1,4 +1,9 @@
-﻿using System.Reflection;
+﻿//-----------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="Oscar Deits">
+//     Usage of the works is permitted provided that this instrument is retained with the works, so that any enity that uses the works is notified of this instrument. DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
+// </copyright>
+//-----------------------------------------------------------------------
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following

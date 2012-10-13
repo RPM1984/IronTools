@@ -1,24 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using IronIO;
-using IronIO.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿//-----------------------------------------------------------------------
+// <copyright file="IronWorkerTest.cs" company="Oscar Deits">
+//     Usage of the works is permitted provided that this instrument is retained with the works, so that any enity that uses the works is notified of this instrument. DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace TestIronWorker
 {
+    using System;
+    using System.Collections.Generic;
+
+    using IronIO;
+    using IronIO.Data;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     /// <summary>
-    ///This is a test class for IronWorkerTest and is intended
-    ///to contain all IronWorkerTest Unit Tests
-    ///</summary>
-    [TestClass()]
+    /// This is a test class for IronWorkerTest and is intended
+    /// to contain all IronWorkerTest Unit Tests
+    /// </summary>
+    [TestClass]
     public class IronWorkerTest
     {
+        #region Fields
+
         private TestContext testContextInstance;
 
+        #endregion Fields
+
+        #region Properties
+
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
+        /// Gets or sets the test context which provides
+        /// information about and functionality for the current test run.
+        /// </summary>
         public TestContext TestContext
         {
             get
@@ -31,42 +45,28 @@ namespace TestIronWorker
             }
         }
 
-        #region Additional test attributes
+        #endregion Properties
 
-        //
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-
-        #endregion Additional test attributes
+        #region Methods
 
         /// <summary>
-        ///A test for Tasks
-        ///</summary>
-        [TestMethod()]
+        /// A test for Log
+        /// </summary>
+        [TestMethod]
+        public void LogTest()
+        {
+            IronWorker target = new IronWorker();
+            string id = string.Empty; // TODO: Initialize to an appropriate value
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
+            actual = target.Log(id);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// A test for Tasks
+        /// </summary>
+        [TestMethod]
         public void TasksTest()
         {
             IronWorker target = new IronWorker();
@@ -81,27 +81,13 @@ namespace TestIronWorker
         }
 
         /// <summary>
-        ///A test for Log
-        ///</summary>
-        [TestMethod()]
-        public void LogTest()
-        {
-            IronWorker target = new IronWorker();
-            string id = string.Empty; // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
-            string actual;
-            actual = target.Log(id);
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        ///A test for Task
-        ///</summary>
-        [TestMethod()]
+        /// A test for Task
+        /// </summary>
+        [TestMethod]
         public void TaskTest()
         {
             IronWorker target = new IronWorker();
-            var tasks = target.Tasks(per_page:1);
+            var tasks = target.Tasks(per_page: 1);
             Assert.AreEqual(1, tasks.Count);
 
             string id = tasks[0].Id;
@@ -110,5 +96,11 @@ namespace TestIronWorker
             Assert.IsNotNull(actual);
             Assert.AreEqual(id, actual.Id);
         }
+
+        #endregion Methods
+
+        #region Other
+
+        #endregion Other
     }
 }

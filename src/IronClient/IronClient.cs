@@ -1,23 +1,34 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IronWorker.cs" company="Oscar Deits">
+// <copyright file="IronClient.cs" company="Oscar Deits">
 // Usage of the works is permitted provided that this instrument is
-// retained with the works, so that any entity that uses the works is 
+// retained with the works, so that any entity that uses the works is
 // notified of this instrument.
 // DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Net;
-using IronIO.Config;
-using Newtonsoft.Json;
-
 namespace IronIO
 {
+    using System;
+    using System.Collections.Specialized;
+    using System.Linq;
+    using System.Net;
+
+    using IronIO.Config;
+
+    using Newtonsoft.Json;
+
     public class IronClient
     {
+        #region Fields
+
+        private string baseUrl;
+        private Random rng;
+
+        #endregion Fields
+
+        #region Constructors
+
         public IronClient(string name, string version, string product, string host = null, int port = 0, string projectId = null, string token = null, string protocol = null, int apiVersion = 0, string configFile = null)
         {
             if (String.IsNullOrEmpty(name))
@@ -41,8 +52,8 @@ namespace IronIO
 
             string homePath = (Environment.OSVersion.Platform == PlatformID.Unix ||
                    Environment.OSVersion.Platform == PlatformID.MacOSX)
-    ? Environment.GetEnvironmentVariable("HOME")
-    : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+            ? Environment.GetEnvironmentVariable("HOME")
+            : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
 
             configFactory = new JsonConfigFactory(configFactory, System.IO.Path.Combine(homePath, ".iron.json"));
             configFactory = new EnvConfigFactory(configFactory);
@@ -61,15 +72,14 @@ namespace IronIO
             BuildHeaders();
         }
 
-        public Configuration Config { get; set; }
+        #endregion Constructors
 
-        private Random _rng;
+        #region Properties
 
-        private Random Rng { get { return _rng ?? (_rng = new Random()); } }
-
-        private NameValueCollection Headers { get; set; }
-
-        private string baseUrl;
+        public Configuration Config
+        {
+            get; set;
+        }
 
         private string BaseUrl
         {
@@ -80,18 +90,38 @@ namespace IronIO
             }
         }
 
-        private void BuildHeaders()
+        private NameValueCollection Headers
         {
-            this.Headers = new NameValueCollection();
-            this.Headers["Authorization"] = String.Format("OAuth {0}", this.Config.Token);
+            get; set;
         }
 
-        private bool ExponentialBackoff(Random rng, int tries)
+        private Random Rng
         {
-            // source: http://aws.amazon.com/articles/1394
-            var timespan = rng.Next(Convert.ToInt32(Math.Pow(4, tries) * 100));
-            System.Threading.Thread.Sleep(timespan);
-            return true;
+            get { return rng ?? (rng = new Random()); }
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public string Delete(string url, NameValueCollection headers = null, bool retry = true)
+        {
+            return Request(url, "DELETE", headers: headers, retry: retry);
+        }
+
+        public string Get(string url, NameValueCollection headers = null, bool retry = true)
+        {
+            return Request(url, "GET", headers: headers, retry: retry);
+        }
+
+        public string Post(string url, string body = "", NameValueCollection headers = null, bool retry = true)
+        {
+            return Request(url, "POST", body: body, headers: headers, retry: retry);
+        }
+
+        public string Put(string url, string body = "", NameValueCollection headers = null, bool retry = true)
+        {
+            return Request(url, "PUT", body: body, headers: headers, retry: retry);
         }
 
         public string Request(string url, string method, string body = null, NameValueCollection headers = null, bool retry = true)
@@ -151,24 +181,20 @@ namespace IronIO
             return json;
         }
 
-        public string Delete(string url, NameValueCollection headers = null, bool retry = true)
+        private void BuildHeaders()
         {
-            return Request(url, "DELETE", headers: headers, retry: retry);
+            this.Headers = new NameValueCollection();
+            this.Headers["Authorization"] = String.Format("OAuth {0}", this.Config.Token);
         }
 
-        public string Get(string url, NameValueCollection headers = null, bool retry = true)
+        private bool ExponentialBackoff(Random rng, int tries)
         {
-            return Request(url, "GET", headers: headers, retry: retry);
+            // source: http://aws.amazon.com/articles/1394
+            var timespan = rng.Next(Convert.ToInt32(Math.Pow(4, tries) * 100));
+            System.Threading.Thread.Sleep(timespan);
+            return true;
         }
 
-        public string Post(string url, string body = "", NameValueCollection headers = null, bool retry = true)
-        {
-            return Request(url, "POST", body: body, headers: headers, retry: retry);
-        }
-
-        public string Put(string url, string body = "", NameValueCollection headers = null, bool retry = true)
-        {
-            return Request(url, "PUT", body: body, headers: headers, retry: retry);
-        }
+        #endregion Methods
     }
 }
