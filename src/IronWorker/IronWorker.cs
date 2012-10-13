@@ -55,7 +55,7 @@ namespace IronIO
         /// <param name="token">Token available from the HUD</param>
         public IronWorker(string projectId = null, string token = null)
         {
-            this.client = new IronClient("IronWorker .NET", "0.1", "iron_worker", projectId: projectId, token: token);
+            this.client = new IronClient("IronWorker .NET", "0.2", "iron_worker", projectId: projectId, token: token);
         }
 
         #region Tasks

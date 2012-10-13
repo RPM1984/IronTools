@@ -45,7 +45,7 @@ namespace IronIO
         /// <param name="token">Token obtained from the HUD</param>
         public IronCache(string projectId = null, string token = null)
         {
-            this.client = new IronClient("IronCache .NET", "0.1", "iron_cache", projectId: projectId, token: token);
+            this.client = new IronClient("IronCache .NET", "0.2", "iron_cache", projectId: projectId, token: token);
         }
 
         #endregion Constructors

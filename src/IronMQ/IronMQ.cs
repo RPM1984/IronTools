@@ -54,7 +54,7 @@ namespace IronIO
         /// <param name="token">Token available from the HUD</param>
         public IronMQ(string name, string projectId = null, string token = null)
         {
-            this.client = new IronClient("IronWorker .NET", "0.1", "iron_mq", projectId: projectId, token: token);
+            this.client = new IronClient("IronWorker .NET", "0.2", "iron_mq", projectId: projectId, token: token);
             this.name = name;
         }
 
