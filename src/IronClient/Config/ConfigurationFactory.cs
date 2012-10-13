@@ -5,8 +5,15 @@
 //-----------------------------------------------------------------------
 namespace IronIO.Config
 {
+    /// <summary>
+    /// Base class for all configuration factories
+    /// </summary>
     internal abstract class ConfigurationFactory
     {
+        /// <summary>
+        /// Factory method for creating configurations
+        /// </summary>
+        /// <returns>A configuration for use with IronClient</returns>
         public abstract Configuration GetConfiguartion();
     }
 }
