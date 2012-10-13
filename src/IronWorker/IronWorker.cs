@@ -24,16 +24,35 @@ namespace IronIO
 
         #region Cores
 
+        /// <summary>
+        /// Code endpoint
+        /// </summary>
         private static readonly string CodeCore = "codes";
+
+        /// <summary>
+        /// Schedule endpoint
+        /// </summary>
         private static readonly string ScheduleCore = "schedules";
+
+        /// <summary>
+        /// Tasks endpoint
+        /// </summary>
         private static readonly string TaskCore = "tasks";
 
         #endregion Cores
 
+        /// <summary>
+        /// Iron.io API client interface
+        /// </summary>
         private IronClient client;
 
         #endregion Fields
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IronWorker" /> class.
+        /// </summary>
+        /// <param name="projectId">Project identifier available from the HUD</param>
+        /// <param name="token">Token available from the HUD</param>
         public IronWorker(string projectId = null, string token = null)
         {
             this.client = new IronClient("IronWorker .NET", "0.1", "iron_worker", projectId: projectId, token: token);
@@ -41,6 +60,11 @@ namespace IronIO
 
         #region Tasks
 
+        /// <summary>
+        /// Cancels a task
+        /// </summary>
+        /// <param name="id">Task identifier</param>
+        /// <returns>Success of cancelation</returns>
         public bool Cancel(string id)
         {
             var url = string.Format("{0}/{1}/cancel", TaskCore, id);
@@ -50,6 +74,11 @@ namespace IronIO
             return status.ContainsKey("msg") && status["msg"] == "Cancelled";
         }
 
+        /// <summary>
+        /// Get a log
+        /// </summary>
+        /// <param name="id">Log identifier</param>
+        /// <returns>log body</returns>
         public string Log(string id)
         {
             var url = string.Format("{0}/{1}/log", TaskCore, id);
@@ -57,6 +86,11 @@ namespace IronIO
             return response;
         }
 
+        /// <summary>
+        /// Enqueue an IEnumerable of Task
+        /// </summary>
+        /// <param name="tasks">Tasks to be enqueued</param>
+        /// <returns>Task identifiers</returns>
         public IList<string> Queue(IEnumerable<Task> tasks)
         {
             var body = JsonConvert.SerializeObject(new
@@ -70,6 +104,15 @@ namespace IronIO
             return result;
         }
 
+        /// <summary>
+        /// Enqueue a single task
+        /// </summary>
+        /// <param name="code_name">Code name of the task</param>
+        /// <param name="payload">JSON payload to be sent to the task</param>
+        /// <param name="priority">Task priority</param>
+        /// <param name="timeout">Task timeout</param>
+        /// <param name="delay">Delay in seconds before executing the task</param>
+        /// <returns>Task identifier</returns>
         public IList<string> Queue(string code_name, string payload, int priority = 0, int timeout = 3600, int delay = 0)
         {
             var tasks = new Task[]
@@ -86,6 +129,11 @@ namespace IronIO
             return this.Queue(tasks);
         }
 
+        /// <summary>
+        /// Get a Task
+        /// </summary>
+        /// <param name="id">Task identifier</param>
+        /// <returns>An Iron.io Task</returns>
         public Task Task(string id)
         {
             var url = string.Format("{0}/{1}", TaskCore, id);
@@ -97,6 +145,15 @@ namespace IronIO
             return taskInfo;
         }
 
+        /// <summary>
+        /// Gets a paged list of Tasks
+        /// </summary>
+        /// <param name="page">Zero based page index</param>
+        /// <param name="per_page">Number of results per page</param>
+        /// <param name="statusFilter">Only lists tasks that match this status filter</param>
+        /// <param name="from_time">Lower bound of the time of the task</param>
+        /// <param name="to_time">Upper bound of the time of the task</param>
+        /// <returns>Tasks that meet the criteria</returns>
         public IList<Task> Tasks(int page = 0, int per_page = 30, StatusEnum statusFilter = StatusEnum.All, DateTime? from_time = null, DateTime? to_time = null)
         {
             StringBuilder queryParameters = new StringBuilder();
@@ -151,6 +208,11 @@ namespace IronIO
 
         #region Code Packages
 
+        /// <summary>
+        /// Gets information on a code object
+        /// </summary>
+        /// <param name="id">Code identifier</param>
+        /// <returns>Information regarding a code package</returns>
         public CodeInfo Code(string id)
         {
             var url = string.Format("{0}/{1}", CodeCore, id);
@@ -159,6 +221,13 @@ namespace IronIO
             return codeInfo;
         }
 
+        /// <summary>
+        /// Gets a paged list of the revisions of a code object
+        /// </summary>
+        /// <param name="id">Code identifier</param>
+        /// <param name="page">Zero based page index</param>
+        /// <param name="per_page">Number of results per page</param>
+        /// <returns>Revisions of a code object</returns>
         public IList<CodeInfo> CodeRevisions(string id, int page = 0, int per_page = 30)
         {
             var url = string.Format("{0}/{1}/revisions?page={2}&per_page={3}", CodeCore, id, page, per_page);
@@ -173,6 +242,12 @@ namespace IronIO
             return new CodeInfo[0];
         }
 
+        /// <summary>
+        /// Gets a paged list of code objects
+        /// </summary>
+        /// <param name="page">Zero based page index</param>
+        /// <param name="per_page">Number of results per page</param>
+        /// <returns>A paged list of code objects</returns>
         public IList<CodeInfo> Codes(int page = 0, int per_page = 30)
         {
             var url = string.Format("{0}?page={1}&per_page={2}", CodeCore, page, per_page);
@@ -187,6 +262,10 @@ namespace IronIO
             return new CodeInfo[0];
         }
 
+        /// <summary>
+        /// Deletes a code object
+        /// </summary>
+        /// <param name="id">Code identifier</param>
         public void DeleteCode(string id)
         {
             var url = string.Format("{0}/{1}", CodeCore, id);
@@ -198,6 +277,10 @@ namespace IronIO
 
         #region Schedule Tasks
 
+        /// <summary>
+        /// Cancels a schedule
+        /// </summary>
+        /// <param name="id">Schedule identifier</param>
         public void CancelSchedule(string id)
         {
             var url = string.Format("{0}/{1}/cancel", ScheduleCore, id);
@@ -205,6 +288,11 @@ namespace IronIO
             var response = this.client.Post(url);
         }
 
+        /// <summary>
+        /// Gets a Schedule
+        /// </summary>
+        /// <param name="id">Schedule identifier</param>
+        /// <returns>A Task Schedule</returns>
         public ScheduleTask Schedule(string id)
         {
             var url = string.Format("{0}/{1}", ScheduleCore, id);
@@ -216,6 +304,12 @@ namespace IronIO
             return scheduleInfo;
         }
 
+        /// <summary>
+        /// Gets a paged list of Schedules
+        /// </summary>
+        /// <param name="page">Zero based page index</param>
+        /// <param name="per_page">Number of results per page</param>
+        /// <returns>A paged list of Schedules</returns>
         public IList<ScheduleTask> Schedules(int page = 0, int per_page = 30)
         {
             var url = string.Format("{0}?page={1}&per_page={2}", ScheduleCore, page, per_page);
@@ -230,6 +324,11 @@ namespace IronIO
             return new ScheduleTask[0];
         }
 
+        /// <summary>
+        /// Schedules tasks
+        /// </summary>
+        /// <param name="schedules">Tasks to schedule</param>
+        /// <returns>Schedule identifiers</returns>
         public IList<string> ScheduleWorker(params ScheduleTask[] schedules)
         {
             // Validate the shedules
