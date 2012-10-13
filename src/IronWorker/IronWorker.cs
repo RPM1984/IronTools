@@ -13,10 +13,16 @@ namespace IronIO
     public class IronWorker
     {
         #region Fields
-        private static readonly string codeCore = "codes";
+
         private IronClient client;
+
+        #region Cores
+
+        private static readonly string codeCore = "codes";
         private static readonly string scheduleCore = "schedules";
         private static readonly string taskCore = "tasks";
+
+        #endregion Cores
 
         #endregion Fields
 
