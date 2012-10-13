@@ -101,7 +101,7 @@ namespace TestIronWorker
             IronWorker target = new IronWorker(); // TODO: Initialize to an appropriate value
             ScheduleTask schedules = new ScheduleTask()
             {
-                code_name = "IronToolsTest",
+                CodeName = "IronToolsTest",
                 RunTimes = 10,
                 RunEvery = 60 * 60
             }; // TODO: Initialize to an appropriate value

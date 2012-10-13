@@ -16,7 +16,7 @@ namespace IronIO.Data
     {
         #region Properties
 
-        public string code_name
+        public string CodeName
         {
             get; set;
         }
