@@ -22,12 +22,18 @@ namespace TestIronWorker
     {
         #region Fields
 
+        /// <summary>
+        /// Current test context
+        /// </summary>
         private TestContext testContextInstance;
 
         #endregion Fields
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TestIronWorker" /> class.    
+        /// </summary>
         public TestIronWorker()
         {
             // TODO: Add constructor logic here
@@ -47,6 +53,7 @@ namespace TestIronWorker
             {
                 return this.testContextInstance;
             }
+
             set
             {
                 this.testContextInstance = value;
@@ -68,12 +75,6 @@ namespace TestIronWorker
             IronWorker target = new IronWorker(projectId, token); // TODO: Initialize to an appropriate value
             string id = string.Empty; // TODO: Initialize to an appropriate value
             target.CancelSchedule(id);
-        }
-
-        [TestMethod]
-        public void TestMethod1()
-        {
-            // TODO: Add test logic here
         }
 
         /// <summary>
