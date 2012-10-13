@@ -18,9 +18,9 @@ namespace IronIO
 
         #region Cores
 
-        private static readonly string codeCore = "codes";
-        private static readonly string scheduleCore = "schedules";
-        private static readonly string taskCore = "tasks";
+        private static readonly string CodeCore = "codes";
+        private static readonly string ScheduleCore = "schedules";
+        private static readonly string TaskCore = "tasks";
 
         #endregion Cores
 
@@ -35,7 +35,7 @@ namespace IronIO
 
         public bool Cancel(string id)
         {
-            var url = string.Format("{0}/{1}/cancel", taskCore, id);
+            var url = string.Format("{0}/{1}/cancel", TaskCore, id);
             var response = client.Post(url);
             var status = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
 
@@ -44,7 +44,7 @@ namespace IronIO
 
         public string Log(string id)
         {
-            var url = string.Format("{0}/{1}/log", taskCore, id);
+            var url = string.Format("{0}/{1}/log", TaskCore, id);
             var response = client.Get(url);
             return response;
         }
@@ -55,7 +55,7 @@ namespace IronIO
             {
                 tasks = tasks.ToArray()
             });
-            string url = taskCore;
+            string url = TaskCore;
             var response = client.Post(url, body: body);
             var template = new { msg = string.Empty, tasks = new[] { new { id = string.Empty } } };
             var result = JsonConvert.DeserializeAnonymousType(response, template).tasks.Select(t => t.id).ToList();
@@ -79,7 +79,7 @@ namespace IronIO
 
         public Task Task(string id)
         {
-            var url = string.Format("{0}/{1}", taskCore, id);
+            var url = string.Format("{0}/{1}", TaskCore, id);
 
             var response = client.Get(url);
 
@@ -113,7 +113,7 @@ namespace IronIO
             if (to_time.HasValue)
                 queryParameters.AppendFormat("to_time={0}", (to_time.Value - new DateTime(1970, 1, 1)).Seconds);
 
-            var url = String.Format("{0}?{1}", taskCore, queryParameters.ToString());
+            var url = String.Format("{0}?{1}", TaskCore, queryParameters.ToString());
 
             var json = client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, Task[]>>(json);
@@ -129,7 +129,7 @@ namespace IronIO
 
         public CodeInfo Code(string id)
         {
-            var url = string.Format("{0}/{1}", codeCore, id);
+            var url = string.Format("{0}/{1}", CodeCore, id);
             var json = client.Get(url);
             var codeInfo = JsonConvert.DeserializeObject<CodeInfo>(json);
             return codeInfo;
@@ -137,7 +137,7 @@ namespace IronIO
 
         public IList<CodeInfo> CodeRevisions(string id, int page = 0, int per_page = 30)
         {
-            var url = string.Format("{0}/{1}/revisions?page={2}&per_page={3}", codeCore, id, page, per_page);
+            var url = string.Format("{0}/{1}/revisions?page={2}&per_page={3}", CodeCore, id, page, per_page);
             var json = client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, CodeInfo[]>>(json);
             CodeInfo[] revisions;
@@ -148,7 +148,7 @@ namespace IronIO
 
         public IList<CodeInfo> Codes(int page = 0, int per_page = 30)
         {
-            var url = string.Format("{0}?page={1}&per_page={2}", codeCore, page, per_page);
+            var url = string.Format("{0}?page={1}&per_page={2}", CodeCore, page, per_page);
             var json = client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, CodeInfo[]>>(json);
             CodeInfo[] codes;
@@ -159,7 +159,7 @@ namespace IronIO
 
         public void DeleteCode(string id)
         {
-            var url = string.Format("{0}/{1}", codeCore, id);
+            var url = string.Format("{0}/{1}", CodeCore, id);
             var json = client.Delete(url);
             var msg = JsonConvert.DeserializeObject(json);
         }
@@ -170,14 +170,14 @@ namespace IronIO
 
         public void CancelSchedule(string id)
         {
-            var url = string.Format("{0}/{1}/cancel", scheduleCore, id);
+            var url = string.Format("{0}/{1}/cancel", ScheduleCore, id);
 
             var response = client.Post(url);
         }
 
         public ScheduleTask Schedule(string id)
         {
-            var url = string.Format("{0}/{1}", scheduleCore, id);
+            var url = string.Format("{0}/{1}", ScheduleCore, id);
 
             var response = client.Get(url);
 
@@ -188,7 +188,7 @@ namespace IronIO
 
         public IList<ScheduleTask> Schedules(int page = 0, int per_page = 30)
         {
-            var url = String.Format("{0}?page={1}&per_page={2}", scheduleCore, page, per_page);
+            var url = String.Format("{0}?page={1}&per_page={2}", ScheduleCore, page, per_page);
             var json = client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, ScheduleTask[]>>(json);
             ScheduleTask[] schedules;
@@ -203,7 +203,7 @@ namespace IronIO
             foreach (var schedule in schedules)
                 schedule.Payload = schedule.Payload ?? "{}";
 
-            var url = scheduleCore;
+            var url = ScheduleCore;
             Dictionary<string, IList<ScheduleTask>> d = new Dictionary<string, IList<ScheduleTask>>();
             d["schedules"] = schedules;
             var json = JsonConvert.SerializeObject(d);
