@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using IronIO.Data;
-using Newtonsoft.Json;
-
-namespace IronIO
+﻿namespace IronIO
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using IronIO.Data;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Iron Worker API interface
     /// </summary>
