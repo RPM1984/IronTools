@@ -5,20 +5,37 @@
 //-----------------------------------------------------------------------
 namespace IronIO.Config
 {
+    /// <summary>
+    /// Configuration factory for creating default configurations for Iron.io cache
+    /// </summary>
     internal class CacheConfigFactory : ConfigurationFactory
     {
+        /// <summary>
+        /// Configuration factory to wrap.
+        /// </summary>
         private ConfigurationFactory configurationFactory;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CacheConfigFactory" /> class.
+        /// </summary>
         public CacheConfigFactory()
             : this(new DefaultConfigurationFactory())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CacheConfigFactory" /> class.
+        /// </summary>
+        /// <param name="configuarationFactory">Configuration factory to wrap</param>
         public CacheConfigFactory(ConfigurationFactory configuarationFactory)
         {
             this.configurationFactory = configuarationFactory;
         }
 
+        /// <summary>
+        /// Creates a default Configuration for Iron.io cache
+        /// </summary>
+        /// <returns>Configuration for use with Iron.io cache</returns>
         public override Configuration GetConfiguartion()
         {
             Configuration config = this.configurationFactory.GetConfiguartion();
