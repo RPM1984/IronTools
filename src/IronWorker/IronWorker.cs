@@ -7,14 +7,16 @@ using Newtonsoft.Json;
 
 namespace IronIO
 {
+    /// <summary>
+    /// Iron Worker API interface
+    /// </summary>
     public class IronWorker
     {
         #region Fields
-
-        private static string codeCore = "codes";
+        private static readonly string codeCore = "codes";
         private IronClient client;
-        private string scheduleCore = "schedules";
-        private string taskCore = "tasks";
+        private static readonly string scheduleCore = "schedules";
+        private static readonly string taskCore = "tasks";
 
         #endregion Fields
 
