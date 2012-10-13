@@ -1,4 +1,12 @@
-﻿namespace IronIO
+﻿//-----------------------------------------------------------------------
+// <copyright file="IronWorker.cs" company="Oscar Deits">
+// Usage of the works is permitted provided that this instrument is
+// retained with the works, so that any entity that uses the works is 
+// notified of this instrument.
+// DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace IronIO
 {
     using System;
     using System.Collections.Generic;
@@ -14,8 +22,6 @@
     {
         #region Fields
 
-        private IronClient client;
-
         #region Cores
 
         private static readonly string CodeCore = "codes";
@@ -24,11 +30,13 @@
 
         #endregion Cores
 
+        private IronClient client;
+
         #endregion Fields
 
         public IronWorker(string projectId = null, string token = null)
         {
-            client = new IronClient("IronWorker .NET", "0.1", "iron_worker", projectId: projectId, token: token);
+            this.client = new IronClient("IronWorker .NET", "0.1", "iron_worker", projectId: projectId, token: token);
         }
 
         #region Tasks
@@ -36,7 +44,7 @@
         public bool Cancel(string id)
         {
             var url = string.Format("{0}/{1}/cancel", TaskCore, id);
-            var response = client.Post(url);
+            var response = this.client.Post(url);
             var status = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
 
             return status.ContainsKey("msg") && status["msg"] == "Cancelled";
@@ -45,7 +53,7 @@
         public string Log(string id)
         {
             var url = string.Format("{0}/{1}/log", TaskCore, id);
-            var response = client.Get(url);
+            var response = this.client.Get(url);
             return response;
         }
 
@@ -56,7 +64,7 @@
                 tasks = tasks.ToArray()
             });
             string url = TaskCore;
-            var response = client.Post(url, body: body);
+            var response = this.client.Post(url, body: body);
             var template = new { msg = string.Empty, tasks = new[] { new { id = string.Empty } } };
             var result = JsonConvert.DeserializeAnonymousType(response, template).tasks.Select(t => t.id).ToList();
             return result;
@@ -66,22 +74,23 @@
         {
             var tasks = new Task[]
                 {
-                    new Task(){
-                                CodeName = code_name,
-                                Payload = payload,
-                                Priority = priority,
-                                Timeout = timeout,
-                                Delay = delay
-                            }
+                    new Task()
+                        {
+                            CodeName = code_name,
+                            Payload = payload,
+                            Priority = priority,
+                            Timeout = timeout,
+                            Delay = delay
+                        }
                 };
-            return Queue(tasks);
+            return this.Queue(tasks);
         }
 
         public Task Task(string id)
         {
             var url = string.Format("{0}/{1}", TaskCore, id);
 
-            var response = client.Get(url);
+            var response = this.client.Get(url);
 
             var taskInfo = JsonConvert.DeserializeObject<Task>(response);
 
@@ -93,33 +102,48 @@
             StringBuilder queryParameters = new StringBuilder();
 
             if (page != 0)
+            {
                 queryParameters.AppendFormat("page={0}&", page);
+            }
+
             if (per_page != 30)
+            {
                 queryParameters.AppendFormat("per_page={0}&", per_page);
+            }
+
             if (!statusFilter.HasFlag(StatusEnum.All))
             {
                 var statusQueryParams = Enum.GetNames(typeof(StatusEnum))
                 .Where(status =>
                     statusFilter.HasFlag((StatusEnum)Enum.Parse(typeof(StatusEnum), status)))
                     .Select(status => status.ToLower())
-                    .Select(status => String.Format("{0}=1", status));
+                    .Select(status => string.Format("{0}=1", status));
 
-                var statusFilterQuery = String.Join("&", statusQueryParams);
+                var statusFilterQuery = string.Join("&", statusQueryParams);
 
                 queryParameters.Append(statusFilterQuery);
             }
+
             if (from_time.HasValue)
+            {
                 queryParameters.AppendFormat("from_time={0}", (from_time.Value - new DateTime(1970, 1, 1)).Seconds);
+            }
+
             if (to_time.HasValue)
+            {
                 queryParameters.AppendFormat("to_time={0}", (to_time.Value - new DateTime(1970, 1, 1)).Seconds);
+            }
 
-            var url = String.Format("{0}?{1}", TaskCore, queryParameters.ToString());
+            var url = string.Format("{0}?{1}", TaskCore, queryParameters.ToString());
 
-            var json = client.Get(url);
+            var json = this.client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, Task[]>>(json);
             Task[] tasks;
             if (d.TryGetValue("tasks", out tasks))
+            {
                 return tasks;
+            }
+
             return new Task[0];
         }
 
@@ -130,7 +154,7 @@
         public CodeInfo Code(string id)
         {
             var url = string.Format("{0}/{1}", CodeCore, id);
-            var json = client.Get(url);
+            var json = this.client.Get(url);
             var codeInfo = JsonConvert.DeserializeObject<CodeInfo>(json);
             return codeInfo;
         }
@@ -138,29 +162,35 @@
         public IList<CodeInfo> CodeRevisions(string id, int page = 0, int per_page = 30)
         {
             var url = string.Format("{0}/{1}/revisions?page={2}&per_page={3}", CodeCore, id, page, per_page);
-            var json = client.Get(url);
+            var json = this.client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, CodeInfo[]>>(json);
             CodeInfo[] revisions;
             if (d.TryGetValue("revisions", out revisions))
+            {
                 return revisions;
+            }
+
             return new CodeInfo[0];
         }
 
         public IList<CodeInfo> Codes(int page = 0, int per_page = 30)
         {
             var url = string.Format("{0}?page={1}&per_page={2}", CodeCore, page, per_page);
-            var json = client.Get(url);
+            var json = this.client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, CodeInfo[]>>(json);
             CodeInfo[] codes;
             if (d.TryGetValue("codes", out codes))
+            {
                 return codes;
+            }
+
             return new CodeInfo[0];
         }
 
         public void DeleteCode(string id)
         {
             var url = string.Format("{0}/{1}", CodeCore, id);
-            var json = client.Delete(url);
+            var json = this.client.Delete(url);
             var msg = JsonConvert.DeserializeObject(json);
         }
 
@@ -172,14 +202,14 @@
         {
             var url = string.Format("{0}/{1}/cancel", ScheduleCore, id);
 
-            var response = client.Post(url);
+            var response = this.client.Post(url);
         }
 
         public ScheduleTask Schedule(string id)
         {
             var url = string.Format("{0}/{1}", ScheduleCore, id);
 
-            var response = client.Get(url);
+            var response = this.client.Get(url);
 
             var scheduleInfo = JsonConvert.DeserializeObject<ScheduleTask>(response);
 
@@ -188,12 +218,15 @@
 
         public IList<ScheduleTask> Schedules(int page = 0, int per_page = 30)
         {
-            var url = String.Format("{0}?page={1}&per_page={2}", ScheduleCore, page, per_page);
-            var json = client.Get(url);
+            var url = string.Format("{0}?page={1}&per_page={2}", ScheduleCore, page, per_page);
+            var json = this.client.Get(url);
             var d = JsonConvert.DeserializeObject<Dictionary<string, ScheduleTask[]>>(json);
             ScheduleTask[] schedules;
             if (d.TryGetValue("schedules", out schedules))
+            {
                 return schedules;
+            }
+
             return new ScheduleTask[0];
         }
 
@@ -201,13 +234,15 @@
         {
             // Validate the shedules
             foreach (var schedule in schedules)
+            {
                 schedule.Payload = schedule.Payload ?? "{}";
+            }
 
             var url = ScheduleCore;
             Dictionary<string, IList<ScheduleTask>> d = new Dictionary<string, IList<ScheduleTask>>();
             d["schedules"] = schedules;
             var json = JsonConvert.SerializeObject(d);
-            var responseJson = client.Post(url, body: json);
+            var responseJson = this.client.Post(url, body: json);
             var template = new { msg = string.Empty, schedules = new[] { new { id = string.Empty } } };
             var result = JsonConvert.DeserializeAnonymousType(responseJson, template).schedules.Select(s => s.id).ToList();
             return result;
