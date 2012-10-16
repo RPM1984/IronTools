@@ -12,6 +12,11 @@ IronTools is a .NET API for work with Iron.io products
 
 # Getting Started
 
+## Where can I get it?
+First, [install NuGet](http://docs.nuget.org/docs/start-here/installing-nuget). Then, install IronTools from the package manager console:
+
+    PM> Install-Package IronTools
+
 
 ## Get credentials
 To start using IronTools, you need to sign up and get an oauth token.
