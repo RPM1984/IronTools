@@ -100,7 +100,7 @@ namespace IronIO
                     return defaultValue;
                 }
 
-                throw we;
+                throw;
             }
         }
 
@@ -137,7 +137,7 @@ namespace IronIO
                     throw new InvalidOperationException(e.Message);
                 }
 
-                throw e;
+                throw;
             }
         }
 
@@ -188,7 +188,7 @@ namespace IronIO
                     throw new InvalidOperationException(e.Message);
                 }
 
-                throw e;
+                throw;
             }
         }
 

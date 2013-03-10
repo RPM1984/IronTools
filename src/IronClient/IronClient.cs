@@ -164,12 +164,13 @@ namespace IronIO
         /// Issues a DELETE request
         /// </summary>
         /// <param name="url">Url to issues the request to</param>
+        /// <param name="body">Data to send</param>
         /// <param name="headers">Additional header information</param>
         /// <param name="retry">Retry if unsuccessful</param>
         /// <returns>JSON response</returns>
-        public string Delete(string url, NameValueCollection headers = null, bool retry = true)
+        public string Delete(string url, string body = "", NameValueCollection headers = null, bool retry = true)
         {
-            return this.Request(url, "DELETE", headers: headers, retry: retry);
+            return this.Request(url, "DELETE", body: body, headers: headers, retry: retry);
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace IronIO
                     }
                     else
                     {
-                        throw we;
+                        throw;
                     }
                 }
             }

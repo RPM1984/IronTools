@@ -13,7 +13,6 @@ namespace IronIO
     using IronIO.Data;
 
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// Iron.io Message Queue API
@@ -76,9 +75,29 @@ namespace IronIO
             var url = string.Format("{0}?page={1}&per_page={2}", QueueCore, page, perPage);
 
             var json = client.Get(url);
-            var template = new[] { new { id = string.Empty, name = string.Empty, projectId = string.Empty } };
-            var queues = JsonConvert.DeserializeAnonymousType(json, template);
-            return queues.Select(q => q.name).ToList();
+            var queues = JsonConvert.DeserializeObject<QueueInfo[]>(json);
+            return queues.Select(q => q.Name).ToList();
+        }
+
+        /// <summary>
+        /// Adds the subscribers to the queue
+        /// </summary>
+        /// <param name="subscribers">Subscribers to be added</param>
+        /// <returns>A QueueInfo with updated information</returns>
+        /// <exception cref="System.Web.HttpException">Thrown if the IronMQ service returns a status other than 200 OK. </exception>
+        /// <exception cref="System.IO.IOException">Thrown if there is an error accessing the IronMQ server.</exception>
+        public QueueInfo Add(Subscriber[] subscribers)
+        {
+            var json = JsonConvert.SerializeObject(
+             new Dictionary<string, Subscriber[]>()
+                {
+                    { "subscribers", subscribers }
+                },
+             this.settings);
+
+            var response = this.client.Post("queues/" + this.name + "/subscribers", json);
+
+            return JsonConvert.DeserializeObject<QueueInfo>(response);
         }
 
         /// <summary>
@@ -196,6 +215,52 @@ namespace IronIO
             this.client.Post("queues/" + this.name + "/messages", json);
         }
 
+        /// <summary>
+        /// Removes the subscribers from the queue.
+        /// </summary>
+        /// <param name="subscribers">Subscribers to be removed</param>
+        /// <returns>A QueueInfo with updated information</returns>
+        /// <exception cref="System.Web.HttpException">Thrown if the IronMQ service returns a status other than 200 OK. </exception>
+        /// <exception cref="System.IO.IOException">Thrown if there is an error accessing the IronMQ server.</exception>
+        public QueueInfo Remove(Subscriber[] subscribers)
+        {
+            var json = JsonConvert.SerializeObject(
+             new Dictionary<string, Subscriber[]>()
+                {
+                    { "subscribers", subscribers }
+                },
+             this.settings);
+
+            var response = this.client.Delete("queues/" + this.name + "/subscribers", json);
+
+            return JsonConvert.DeserializeObject<QueueInfo>(response);
+        }
+
+        /// <summary>
+        /// Change the properties of a queue including setting subscribers and the push type if you want it to be a push queue
+        /// </summary>
+        /// <param name="subscribers">An array of subscribers containing a “url” field. This set of subscribers will replace the existing subscribers.</param>
+        /// <param name="push_type">Either multicast to push to all subscribers or unicast to push to one and only one subscriber</param>
+        /// <param name="retries">How many times to retry on failure.</param>
+        /// <param name="retries_delay">Delay between each retry in seconds.</param>
+        /// <returns>A QueueInfo containing updated information</returns>
+        /// <exception cref="System.Web.HttpException">Thrown if the IronMQ service returns a status other than 200 OK. </exception>
+        /// <exception cref="System.IO.IOException">Thrown if there is an error accessing the IronMQ server.</exception>
+        public QueueInfo Update(Subscriber[] subscribers = null, string push_type = "multicast", int retries = 3, int retries_delay = 60)
+        {
+            var json = JsonConvert.SerializeObject(
+                new Dictionary<string, object>()
+                {
+                    { "push_type", push_type },
+                    { "retries", retries },
+                    { "retries_delay", retries_delay },
+                    { "subscribers", subscribers }
+                },
+                this.settings);
+
+            var response = this.client.Post("queues/" + this.name, json);
+            return JsonConvert.DeserializeObject<QueueInfo>(response);
+        }
         #endregion Methods
     }
 }
