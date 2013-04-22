@@ -133,19 +133,17 @@ namespace IronIO
         {
             this.Delete(msg.Id);
         }
-
+        
         /// <summary>
-        /// Retrieves a Message from the queue. If there are no items on the queue, an HTTPException is thrown.
+        /// Retrieves up to "max" messages from the queue
         /// </summary>
-        /// <returns>A single message</returns>
+        /// <param name="max">the count of messages to return, default is 1</param>
+        /// <returns>An IList of messages</returns>
         /// <exception cref="System.Web.HttpException">Thrown if the IronMQ service returns a status other than 200 OK. </exception>
         /// <exception cref="System.IO.IOException">Thrown if there is an error accessing the IronMQ server.</exception>
         public Message Get()
         {
-            var url = string.Join("/", QueueCore, this.name, "messages");
-            string json = this.client.Get(url);
-            var queueResp = JsonConvert.DeserializeObject<Dictionary<string, Message[]>>(json, this.settings);
-            return queueResp.ContainsKey("messages") ? queueResp["messages"][0] : null;
+            return Get(0).FirstOrDefault();
         }
 
         /// <summary>
@@ -155,11 +153,10 @@ namespace IronIO
         /// <returns>An IList of messages</returns>
         /// <exception cref="System.Web.HttpException">Thrown if the IronMQ service returns a status other than 200 OK. </exception>
         /// <exception cref="System.IO.IOException">Thrown if there is an error accessing the IronMQ server.</exception>
-        public IList<Message> Get(int max = 1)
+        public IList<Message> Get(int max)
         {
             string json = this.client.Get(string.Format("queues/{0}/messages?n={1}", this.name, max));
             var queueResp = JsonConvert.DeserializeObject<Dictionary<string, Message[]>>(json, this.settings);
-
             return queueResp.ContainsKey("messages") ? queueResp["messages"] : new Message[0];
         }
 
